@@ -1,7 +1,6 @@
 
 ###############################
-#$deviceid=[System.Net.Dns]::GetHostByName($env:computerName).HostName
-$deviceid='aplpt'
+$deviceid=[System.Net.Dns]::GetHostByName($env:computerName).HostName
 ###############
 cls
 Get-Command '*json'
