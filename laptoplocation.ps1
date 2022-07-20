@@ -1,6 +1,7 @@
 
 ###############################
 $deviceid=[System.Net.Dns]::GetHostByName($env:computerName).HostName
+$username=whoami
 ###############
 cls
 Get-Command '*json'
@@ -61,11 +62,12 @@ if ($charge -eq $null) {$charge = 100}
 if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'Ac'} else {$ac = 'Battery'}
 
 #http-get to geoserver
-$uri= 'https://geo.whereit.ru:45055/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$geo.ip+'&zip='+$geo.zipcode+'&batt='+$charge+'&isp='+$geo.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid
+$uri= 'https://geo.whereit.ru:45055/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$geo.ip+'&zip='+$geo.zipcode+'&batt='+$charge+'&isp='+$geo.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+'&username='+$username
 Invoke-WebRequest -Uri $uri
 
 #Write vars
 write('DeviceID='+$deviceid)
+write('Username='+$username)
 write('timestamp='+$ts)
 write('latitude='+$result.position.latitude)
 write('longitude='+$result.position.longitude)
