@@ -1,7 +1,7 @@
 
 #############ChangeMe##################
 $server='geo.whereit.ru'
-$srvport=';45055'
+$srvport=':45055'
 $srvproto='https'
 ##################
 
