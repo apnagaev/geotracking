@@ -53,7 +53,7 @@ if ($warr.Item(0) -ne $null){
     $wifiadd = ', "wifi_networks": [ '
     ForEach ($item in $warr){
         $warr.Item($i)
-        $wifiadd = $wifiadd + '{"mac": "'+$warr.Item($i)+'", "signal_strength": '+$wsarr.Item($i)+', "age": 500},'
+        $wifiadd = $wifiadd + '{"mac": "'+$warr.Item($i)+'", "signal_strength": "'+$wsarr.Item($i)+'", "age": 500},'
         $i= $i+1
         }
     $wifiadd = $wifiadd -replace ".{1}$"
