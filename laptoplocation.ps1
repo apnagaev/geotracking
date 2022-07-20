@@ -3,6 +3,7 @@
 $server='geo.whereit.ru'
 $srvport=':45055'
 $srvproto='https'
+$yaapikey='AFiL1mIBAAAAElgNcwIAXjg8FRcwCU0YrS3kBXSc9r_Vxf4AAAAAAAAAAAANOb4FxMaibmz6A9WREh4-y4bqhw=='
 ##################
 
 $deviceid=[System.Net.Dns]::GetHostByName($env:computerName).HostName
@@ -44,15 +45,15 @@ $wsarr = $wsarr -replace '^.*(?=.{2}$)'
 
 
 #Make json for yandex-locator request (need optimize)
-$Body = 'json={"common": {"version": "1.0", "api_key": "AFiL1mIBAAAAElgNcwIAXjg8FRcwCU0YrS3kBXSc9r_Vxf4AAAAAAAAAAAANOb4FxMaibmz6A9WREh4-y4bqhw=="}, "ip": {"address_v4": "'+$ipinf.query+'"}}'
+$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ipinf.query+'"}}'
 if ($wsarr.Item(0) -ne $null){
-$Body = 'json={"common": {"version": "1.0", "api_key": "AFiL1mIBAAAAElgNcwIAXjg8FRcwCU0YrS3kBXSc9r_Vxf4AAAAAAAAAAAANOb4FxMaibmz6A9WREh4-y4bqhw=="}, "wifi_networks": [ {"mac": "'+$warr.Item(0)+'", "signal_strength": '+$wsarr.Item(0)+', "age": 500} ], "ip": {"address_v4": "'+$ipinf.query+'"}}'
+$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "wifi_networks": [ {"mac": "'+$warr.Item(0)+'", "signal_strength": '+$wsarr.Item(0)+', "age": 500} ], "ip": {"address_v4": "'+$ipinf.query+'"}}'
 }
 if ($wsarr.Item(1) -ne $null){
-$Body = 'json={"common": {"version": "1.0", "api_key": "AFiL1mIBAAAAElgNcwIAXjg8FRcwCU0YrS3kBXSc9r_Vxf4AAAAAAAAAAAANOb4FxMaibmz6A9WREh4-y4bqhw=="}, "wifi_networks": [ {"mac": "'+$warr.Item(0)+'", "signal_strength": '+$wsarr.Item(0)+', "age": 500}, {"mac": "'+$warr.Item(1)+'", "signal_strength": '+$wsarr.Item(1)+', "age": 500} ], "ip": {"address_v4": "'+$ipinf.query+'"}}'
+$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "wifi_networks": [ {"mac": "'+$warr.Item(0)+'", "signal_strength": '+$wsarr.Item(0)+', "age": 500}, {"mac": "'+$warr.Item(1)+'", "signal_strength": '+$wsarr.Item(1)+', "age": 500} ], "ip": {"address_v4": "'+$ipinf.query+'"}}'
 }
 if ($wsarr.Item(2) -ne $null){
-$Body = 'json={"common": {"version": "1.0", "api_key": "AFiL1mIBAAAAElgNcwIAXjg8FRcwCU0YrS3kBXSc9r_Vxf4AAAAAAAAAAAANOb4FxMaibmz6A9WREh4-y4bqhw=="}, "wifi_networks": [ {"mac": "'+$warr.Item(0)+'", "signal_strength": '+$wsarr.Item(0)+', "age": 500}, {"mac": "'+$warr.Item(1)+'", "signal_strength": '+$wsarr.Item(1)+', "age": 500}, {"mac": "'+$warr.Item(2)+'", "signal_strength": '+$wsarr.Item(2)+', "age": 500} ], "ip": {"address_v4": "'+$ipinf.query+'"}}'
+$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "wifi_networks": [ {"mac": "'+$warr.Item(0)+'", "signal_strength": '+$wsarr.Item(0)+', "age": 500}, {"mac": "'+$warr.Item(1)+'", "signal_strength": '+$wsarr.Item(1)+', "age": 500}, {"mac": "'+$warr.Item(2)+'", "signal_strength": '+$wsarr.Item(2)+', "age": 500} ], "ip": {"address_v4": "'+$ipinf.query+'"}}'
 }
 
 
