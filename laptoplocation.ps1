@@ -3,7 +3,7 @@
 $server='geo.whereit.ru'
 $srvport=':45055'
 $srvproto='https'
-$yaapikey='AFiL1mIBAAAAElgNcwIAXjg8FRcwCU0YrS3kBXSc9r_Vxf4AAAAAAAAAAAANOb4FxMaibmz6A9WREh4-y4bqhw=='
+$yaapikey= Get-Content C:\scripts\key.txt
 ##################
 
 $deviceid=[System.Net.Dns]::GetHostByName($env:computerName).HostName
