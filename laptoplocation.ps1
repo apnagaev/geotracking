@@ -25,7 +25,7 @@ Get-Command '*json'
 
 #Get white IP information
 $ipinf =  (Invoke-RestMethod http://ip-api.com/json/)
-#$ipinf
+$ipinf
 
 
 #Get avialable WiFi networks
@@ -79,7 +79,7 @@ if ($charge -eq $null) {$charge = 100}
 if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'Ac'} else {$ac = 'Battery'}
 
 #http-get to geoserver
-$uri= $srvproto+'://'+$server+$srvport+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$geo.ip+'&zip='+$geo.zipcode+'&batt='+$charge+'&isp='+$geo.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+'&username='+$username
+$uri= $srvproto+'://'+$server+$srvport+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&zip='+$ipinf.zip+'&batt='+$charge+'&isp='+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+'&username='+$username
 Invoke-WebRequest -Uri $uri
 
 #Write vars
