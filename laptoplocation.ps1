@@ -1,8 +1,12 @@
 
 ###############################
 $deviceid=[System.Net.Dns]::GetHostByName($env:computerName).HostName
-$username=whoami
-###############
+#Console User Loggined
+$username = query user /server:localhost
+$username = $user -match 'console'
+$username = $user -replace '\s+','!'
+$username = $user -split '!'
+$username = $user.Item(1)+';'+$user.Item(6)+';'+$user.Item(7)
 cls
 Get-Command '*json'
 
