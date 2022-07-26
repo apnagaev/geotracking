@@ -1,6 +1,5 @@
 #############ChangeMe##################
 $server='geo.whereit.ru'
-$srvport=':45055'
 $srvproto='https'
 $yaapikey= Get-Content C:\scripts\key.txt
 ##################
@@ -85,8 +84,10 @@ if ($charge -eq $null) {$charge = 100}
 if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'AC'} else {$ac = 'Battery'}
 
 #http-get to geoserver
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&zip='+$ipinf.zip+'&batt='+$charge+'&isp='+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+'&username='+$username
+if ($ipinf.zip -ne $null) {$ipinf.zip = '&zip='+$ipinf.zip}
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+'&isp='+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+'&username='+$username+$ipinf.zip
 Invoke-WebRequest -Uri $uri
+
 
 #Write vars
 write('DeviceID='+$deviceid)
