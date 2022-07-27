@@ -18,7 +18,7 @@ $username = $username -match 'console'
 if ($username -ne $null) {
     $username = $username -replace '\s+','!'
     $username = $username -split '!'
-    $username = $username.Item(1)+'@'+$domain.domain+'-'+$username.Item(6)+'-'+$username.Item(7)
+    #$username = $username.Item(1)+'@'+$domain.domain+'-'+$username.Item(6)+'-'+$username.Item(7)
     }
 else{$username='system'}
 
@@ -80,12 +80,19 @@ $ts=[int](New-TimeSpan -Start $date1 -End $date2).TotalSeconds
 #Check charge and power, processing for pc
 $charge = Get-CimInstance -ClassName Win32_Battery | Select-Object -ExpandProperty EstimatedChargeRemaining
 $ac = (Get-WmiObject -Class BatteryStatus -Namespace root\wmi -ComputerName "localhost").PowerOnLine
-if ($charge -eq $null) {$charge = 100}
+if ($charge -eq $null) {$charge = 100} 
 if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'AC'} else {$ac = 'Battery'}
 
 #http-get to geoserver
 if ($ipinf.zip -ne '') {$ipinf.zip = '&zip='+$ipinf.zip}
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+'&isp='+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+'&username='+$username+$ipinf.zip
+if ($ipinf.isp -ne '') {$ipinf.isp = '&isp='+$ipinf.isp}
+if ($username.Item(1) -ne '') {$login = '&login='+$username.Item(1)}
+if ($username.Item(6) -ne '') {$domain = '&domain='+$domain.domain}
+if ($username.Item(7) -ne '') {$logt = '&logintime='+$username.Item(6)+' '+$username.Item(7)}
+
+
+
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+$login+$domain+$logt
 Invoke-WebRequest -Uri $uri -OutFile 'loc.log'
 del 'loc.log'
 
