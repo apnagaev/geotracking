@@ -87,9 +87,8 @@ if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'AC'} else {$ac = 'Battery'}
 if ($ipinf.zip -ne '') {$ipinf.zip = '&zip='+$ipinf.zip}
 if ($ipinf.isp -ne '') {$ipinf.isp = '&isp='+$ipinf.isp}
 if ($username.Item(1) -ne '') {$login = '&login='+$username.Item(1)}
-if ($username.Item(6) -ne '') {$domain = '&domain='+$domain.domain}
 if ($username.Item(7) -ne '') {$logt = '&logintime='+$username.Item(6)+' '+$username.Item(7)}
-
+if ($domain.domain -ne '') {$domain = '&domain='+$domain.domain}
 
 
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+$login+$domain+$logt
