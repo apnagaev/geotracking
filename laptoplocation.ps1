@@ -1,7 +1,5 @@
 #############ChangeMe##################
 $server='geo.whereit.ru'
-$srvport1=':45055'
-$srvport2=':8080'
 $srvproto='https'
 $yaapikey= Get-Content C:\scripts\key.txt
 ##################
@@ -90,10 +88,6 @@ if ($ipinf.zip -ne '') {$ipinf.zip = '&zip='+$ipinf.zip}
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+'&isp='+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+'&username='+$username+$ipinf.zip
 Invoke-WebRequest -Uri $uri -OutFile 'loc.log'
 del 'loc.log'
-$uri= $srvproto+'://'+$server+$srvport1+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+'&isp='+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+'&username='+$username+$ipinf.zip
-Invoke-WebRequest -Uri $uri
-$uri= $srvproto+'://'+$server+$srvport2+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+'&isp='+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+'&username='+$username+$ipinf.zip
-Invoke-WebRequest -Uri $uri
 
 
 #Write vars
