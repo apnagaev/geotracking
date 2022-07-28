@@ -83,15 +83,55 @@ $ac = (Get-WmiObject -Class BatteryStatus -Namespace root\wmi -ComputerName "loc
 if ($charge -eq $null) {$charge = 100} 
 if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'AC'} else {$ac = 'Battery'}
 
+
+
+[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("cp866")
+$netsh = netsh wlan sh int | Select-String signal,ssid,сигнал
+$netsh
+
+$ssid = $netsh.Item(0)
+$ssid = $ssid -replace 'SSID',''
+$ssid = $ssid -replace ':',''
+$ssid = $ssid -replace '\s',''
+
+$signal = $netsh.Item(2)
+$signal = $signal -replace 'Сигнал',''
+$signal = $signal -replace ':',''
+$signal = $signal -replace '\s',''
+
+$ssid
+$signal
+
+$manuname = Get-CimInstance -ClassName Win32_ComputerSystem
+$manuname | ConvertTo-Json
+$manuname.Manufacturer
+$manuname.SystemFamily
+$manuname.Model
+
+
+$network = Get-NetConnectionProfile
+$network | ConvertTo-Json
+$network.InterfaceAlias
+$network.Name
+
+
+
+
+
 #http-get to geoserver
 if ($ipinf.zip -ne '') {$ipinf.zip = '&zip='+$ipinf.zip}
 if ($ipinf.isp -ne '') {$ipinf.isp = '&isp='+$ipinf.isp}
 if ($username.Item(1) -ne '') {$login = '&login='+$username.Item(1)}
 if ($username.Item(7) -ne '') {$logt = '&logintime='+$username.Item(6)+' '+$username.Item(7)}
 if ($domain.domain -ne '') {$domain = '&domain='+$domain.domain}
+if ($ssid -ne '') {$ssid = '&ssid='+$ssid}
+if ($signal -ne '') {$signal = '&signal='+$signal}
+if ($network.InterfaceAlias -ne '') {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
+if ($network.Name -ne '') {$networkName = '&net_name='+$network.Name}
 
-
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+$login+$domain+$logt
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+
+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+
+$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName
 Invoke-WebRequest -Uri $uri -OutFile 'loc.log'
 del 'loc.log'
 
