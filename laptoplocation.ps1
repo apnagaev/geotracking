@@ -134,7 +134,7 @@ if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+
 '&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+
 $login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName
-Invoke-WebRequest -Uri $uri -OutFile 'loc.log'
+Invoke-RestMethod -Uri $uri -OutFile 'loc.log'
 del 'loc.log'
 
 
