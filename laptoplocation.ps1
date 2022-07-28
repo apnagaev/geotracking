@@ -86,6 +86,8 @@ if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'AC'} else {$ac = 'Battery'}
 
 
 [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("cp866")
+$networkInterfaceAlias=''
+$net_name=''
 $netsh = netsh wlan sh int | Select-String signal,ssid,сигнал
 $netsh
 
