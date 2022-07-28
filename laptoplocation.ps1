@@ -128,8 +128,8 @@ if ($username.Item(7) -ne '') {$logt = '&logintime='+$username.Item(6)+' '+$user
 if ($domain.domain -ne '') {$domain = '&domain='+$domain.domain}
 if ($ssid -ne '') {$ssid = '&ssid='+$ssid}
 if ($signal -ne '') {$signal = '&signal='+$signal}
-if ($network.InterfaceAlias -ne '') {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
-if ($network.Name -ne '') {$networkName = '&net_name='+$network.Name}
+if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
+if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
 
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+
 '&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+
