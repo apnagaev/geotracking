@@ -23,7 +23,7 @@ if ($username -ne $null) {
 else{$username='system'}
 
 $userstatus = (query user) -split "\n" -replace '\s\s+', ';' | convertfrom-csv -Delimiter ';' | select-object -first 1
-$userstatus.СТАТУС = $userstatus.СТАТУС
+#$userstatus.СТАТУС = $userstatus.СТАТУС
 
 
 cls
@@ -133,8 +133,8 @@ if ($ssid -ne '') {$ssid = '&ssid='+$ssid}
 if ($signal -ne '') {$signal = '&signal='+$signal}
 if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
 if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
-if ($userstatus.СТАТУС -ne '') {$userstatus = '&UserStatus='+$userstatus.СТАТУС}
-if ($userstatus.СЕАНС -match '^\d+$') {$userstatus = '&UserStatus='+$userstatus.ID}
+if ($userstatus.СТАТУС -ne '') {$userstat = '&UserStatus='+$userstatus.СТАТУС}
+if ($userstatus.СЕАНС -match '^\d+$') {$userstat = '&UserStatus='+$userstatus.ID}
 
 
 
@@ -145,7 +145,7 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
 
 
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName+$userstatus+$localip
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName+$userstat+$localip
 Invoke-RestMethod -Uri $uri -OutFile 'loc.log' -Method 'Post' -Body $uri -ContentType 'application/x-www-form-urlencoded'
 del 'loc.log'
 
