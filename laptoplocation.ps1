@@ -22,8 +22,8 @@ if ($username -ne $null) {
     }
 else{$username='system'}
 
-$userstatus = (query user) -split "\n" -replace '\s\s+', ';' | convertfrom-csv -Delimiter ';'
-$userstatus.СТАТУС
+$userstatus = (query user) -split "\n" -replace '\s\s+', ';' | convertfrom-csv -Delimiter ';' | select-object -first 1
+$userstatus.СТАТУС = $userstatus.СТАТУС
 
 
 cls
@@ -133,7 +133,7 @@ if ($ssid -ne '') {$ssid = '&ssid='+$ssid}
 if ($signal -ne '') {$signal = '&signal='+$signal}
 if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
 if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
-if ($userstatus.СТАТУС -ne '') {$userstatus = '&UserStatusP='+$userstatus.СТАТУС}
+if ($userstatus.СТАТУС -ne '') {$userstatus = '&UserStatus='+$userstatus.СТАТУС}
 
 
 
