@@ -132,19 +132,22 @@ if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlia
 if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
 
 
-$localip = Get-NetIPAddress -SuffixOrigin DHCP -AddressFamily IPv4
+
+$localip = Get-NetIPAddress -InterfaceAlias $network.InterfaceAlias
 $localip | ConvertTo-Json
+if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
 
 
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+
 '&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+
-$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName+'&localIP='+$localip.IPAddress
-Invoke-RestMethod -Uri $uri -OutFile 'loc.log'
+$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName+$localip
+Invoke-RestMethod -Uri $uri -OutFile 'loc.log' -TimeoutSec 2
 del 'loc.log'
 
 
 #Write vars
+write('localIP='+$localip.IPAddress)
 write('DeviceID='+$deviceid)
 write('Username='+$username)
 write('timestamp='+$ts)
