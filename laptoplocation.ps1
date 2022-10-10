@@ -134,7 +134,7 @@ if ($signal -ne '') {$signal = '&signal='+$signal}
 if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
 if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
 if ($userstatus.СТАТУС -ne '') {$userstatus = '&UserStatus='+$userstatus.СТАТУС}
-if ($userstatus.СЕАНС -is [int]) {$userstatus = '&UserStatus='+$userstatus.ID}
+if ($userstatus.СЕАНС -match '^\d+$') {$userstatus = '&UserStatus='+$userstatus.ID}
 
 
 
