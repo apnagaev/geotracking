@@ -140,7 +140,7 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
 
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName+$localip
-Invoke-RestMethod -Uri $uri -OutFile 'loc.log' -Method 'Post' -ContentType application/x-www-form-urlencoded
+Invoke-RestMethod -Uri $uri -OutFile 'loc.log' -Method 'Post' -ContentType 'application/x-www-form-urlencoded' -DisableKeepAlive
 del 'loc.log'
 
 
