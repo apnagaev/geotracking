@@ -131,9 +131,15 @@ if ($signal -ne '') {$signal = '&signal='+$signal}
 if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
 if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
 
+
+$localip = Get-NetIPAddress -SuffixOrigin DHCP -AddressFamily IPv4
+$localip | ConvertTo-Json
+
+
+
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+
 '&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+
-$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName
+$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName+'&localIP='+$localip.IPAddress
 Invoke-RestMethod -Uri $uri -OutFile 'loc.log'
 del 'loc.log'
 
