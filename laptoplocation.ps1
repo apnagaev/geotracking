@@ -117,16 +117,19 @@ $network.Name
 
 
 $computer = 'localhost'
+        $user = $null 
+        $lockuser = ''
+        $lckuser = $null
 #function GetRemoteLogonStatus ($computer = 'localhost') { 
 if (Test-Connection $computer -Count 2 -Quiet) { 
     try { 
-        $user = $null 
         $user = gwmi -Class win32_computersystem -ComputerName $computer | select -ExpandProperty username -ErrorAction Stop 
         } 
-    catch { "Not logged on"; $userstatus='Not logged on'; return } 
+    catch { $userstatus='Not logged on'; return } 
     try { 
         if ((Get-Process logonui -ComputerName $computer -ErrorAction Stop) -and ($user)) { 
-            "Workstation locked by $user" 
+            $userstatus='locked'
+            $lockuser = $user
             } 
         } 
     catch { if ($user) { "$user logged on"; $userstatus='logged on' } } 
@@ -149,6 +152,7 @@ if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlia
 if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
 if ($userstatus -ne '') {$userstat = '&UserStatus='+$userstatus}
 #if ($userstatus.СЕАНС -match '^\d+$') {$userstat = '&UserStatus='+$userstatus.ID}
+if ($lockuser -ne '') {$lckuser = '&Locked by='+$lockuser}
 
 
 
@@ -159,7 +163,7 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
 
 
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName+$userstat+$localip
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName+$userstat+$lckuser+$localip
 Invoke-RestMethod -Uri $uri -OutFile 'loc.log' -Method 'Post' -Body $uri -ContentType 'application/x-www-form-urlencoded'
 del 'loc.log'
 
@@ -175,6 +179,7 @@ write('Charge='+$charge)
 write('Power='+$ac)
 write('URL='+$uri)
 write('ZIP='+$ipinf.zip)
+
 # SIG # Begin signature block
 # MIIIDgYJKoZIhvcNAQcCoIIH/zCCB/sCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
