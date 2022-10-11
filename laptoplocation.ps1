@@ -22,10 +22,6 @@ if ($username -ne $null) {
     }
 else{$username='system'}
 
-$userstatus = (query user) -split "\n" -replace '\s\s+', ';' | convertfrom-csv -Delimiter ';' | select-object -first 1
-#$userstatus.СТАТУС = $userstatus.СТАТУС
-
-
 cls
 Get-Command '*json'
 
@@ -120,21 +116,39 @@ $network.InterfaceAlias
 $network.Name
 
 
+$computer = 'localhost'
+#function GetRemoteLogonStatus ($computer = 'localhost') { 
+if (Test-Connection $computer -Count 2 -Quiet) { 
+    try { 
+        $user = $null 
+        $user = gwmi -Class win32_computersystem -ComputerName $computer | select -ExpandProperty username -ErrorAction Stop 
+        } 
+    catch { "Not logged on"; $userstatus='Not logged on'; return } 
+    try { 
+        if ((Get-Process logonui -ComputerName $computer -ErrorAction Stop) -and ($user)) { 
+            "Workstation locked by $user" 
+            } 
+        } 
+    catch { if ($user) { "$user logged on"; $userstatus='logged on' } } 
+    } 
+else { "$computer Offline" } 
+#}
+
 
 
 
 #http-get to geoserver
 if ($ipinf.zip -ne '') {$ipinf.zip = '&zip='+$ipinf.zip}
 if ($ipinf.isp -ne '') {$ipinf.isp = '&isp='+$ipinf.isp}
-if ($username.Item(1) -ne '') {$login = '&login='+$username.Item(1)}
+if ($user -ne '') {$login = '&login='+$user}
 if ($username.Item(7) -ne '') {$logt = '&logintime='+$username.Item(6)+' '+$username.Item(7)}
 if ($domain.domain -ne '') {$domain = '&domain='+$domain.domain}
 if ($ssid -ne '') {$ssid = '&ssid='+$ssid}
 if ($signal -ne '') {$signal = '&signal='+$signal}
 if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
 if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
-if ($userstatus.СТАТУС -ne '') {$userstat = '&UserStatus='+$userstatus.СТАТУС}
-if ($userstatus.СЕАНС -match '^\d+$') {$userstat = '&UserStatus='+$userstatus.ID}
+if ($userstatus -ne '') {$userstat = '&UserStatus='+$userstatus}
+#if ($userstatus.СЕАНС -match '^\d+$') {$userstat = '&UserStatus='+$userstatus.ID}
 
 
 
