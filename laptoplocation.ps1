@@ -1,4 +1,11 @@
 cls
+#####################nulled vars###################
+$file = ''
+$yaapikey = ''
+$server = ''
+$i=0
+$wifiadd = ''
+#####args##############
 Get-Service -Fule $arg[0]
 $file=$arg[0]
 #############ChangeMe##################
@@ -17,9 +24,6 @@ $file
 $yaapikey
 $server
 
-
-$i=0
-$wifiadd = ''
 
 $deviceid=[System.Net.Dns]::GetHostByName($env:computerName).HostName
 
