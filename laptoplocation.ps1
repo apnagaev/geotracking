@@ -39,10 +39,7 @@ Get-Command '*json'
 
 #Get white IP information
 $ipinf =  (Invoke-RestMethod http://ip-api.com/json/)
-$ipinf
-
-$yaapikey
-$server
+#$ipinf
 
 #Get avialable WiFi networks
 $wlan = netsh wlan show network mode=bssid
@@ -72,7 +69,8 @@ if ($warr.Item(0) -ne $null){
     $wifiadd = $wifiadd + ']'
     }
 $Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ipinf.query+'"}'+$wifiadd+'}'
-$yaapikey
+write('yaapikey='+$yaapikey)
+write('server='+$server)
 $Body
 
 #Yandex-locator http-post
