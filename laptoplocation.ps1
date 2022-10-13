@@ -68,7 +68,7 @@ if ($warr.Item(0) -ne $null){
     $wifiadd = $wifiadd + ']'
     }
 $Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ipinf.query+'"}'+$wifiadd+'}'
-#$Body
+$Body
 
 #Yandex-locator http-post
 $Uri = "https://api.lbs.yandex.net/geolocation/"
