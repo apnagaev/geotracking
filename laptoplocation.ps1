@@ -1,8 +1,5 @@
 cls
 #####################nulled vars###################
-$file = $null
-$yaapikey = $null
-$server = $null
 $i=0
 $wifiadd = ''
 #####args##############
