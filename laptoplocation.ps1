@@ -185,7 +185,8 @@ write('Charge='+$charge)
 write('Power='+$ac)
 write('URL='+$uri)
 write('ZIP='+$ipinf.zip)
-
+$yaapikey
+$server
 
 # SIG # Begin signature block
 # MIIIDgYJKoZIhvcNAQcCoIIH/zCCB/sCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
