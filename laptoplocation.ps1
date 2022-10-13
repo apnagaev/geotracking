@@ -177,8 +177,9 @@ $localip | ConvertTo-Json
 if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
 
-
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkInterfaceAlias+$networkName+$userstat+$lckuser+$localip
+#networkinterfacealias
+#localip
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&computer_name='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser
 Invoke-RestMethod -Uri $uri -OutFile 'loc.log' -Method 'Post' -Body $uri -ContentType 'application/x-www-form-urlencoded'
 del 'loc.log'
 
