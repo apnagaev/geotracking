@@ -1,15 +1,21 @@
 cls
+Get-Service -Fule $arg[0]
+$file=$arg[0]
 #############ChangeMe##################
 $srvproto='https'
-$yaapikey= Get-Content C:\scripts\key.txt | Select-String -Pattern 'key='
-if ($yaapikey -eq '') {$yaapikey= Get-Content C:\scripts\key.txt}
-if ($yaapikey -eq $null) {$yaapikey= Get-Content C:\scripts\key.txt}
+if ($file -eq $null) {$file='C:\scripts\key.txt'}
+$yaapikey= Get-Content $file | Select-String -Pattern 'key='
+if ($yaapikey -eq '') {$yaapikey= Get-Content $file}
+if ($yaapikey -eq $null) {$yaapikey= Get-Content $file}
 $yaapikey = $yaapikey -replace 'key=',''
-$server= Get-Content C:\scripts\key.txt | Select-String -Pattern 'server='
+$server= Get-Content $file | Select-String -Pattern 'server='
 if ($server -eq '') {$server='geo.whereit.ru'}
 if ($server -eq $null) {$server='geo.whereit.ru'}
 $server = $server -replace 'server=',''
 ##################
+$file
+$yaapikey
+$server
 
 
 $i=0
