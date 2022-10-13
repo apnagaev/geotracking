@@ -1,3 +1,4 @@
+cls
 #############ChangeMe##################
 $srvproto='https'
 $yaapikey= Get-Content C:\scripts\key.txt | -include 'key='
@@ -9,8 +10,7 @@ if ($server -eq '') {$server='geo.whereit.ru'}
 if ($server -eq $null) {$server='geo.whereit.ru'}
 $server = $server -replace 'key=',''
 ##################
-$yaapikey
-$server
+
 
 $i=0
 $wifiadd = ''
@@ -30,13 +30,15 @@ if ($username -ne $null) {
     }
 else{$username='system'}
 
-cls
+
 Get-Command '*json'
 
 #Get white IP information
 $ipinf =  (Invoke-RestMethod http://ip-api.com/json/)
 $ipinf
 
+$yaapikey
+$server
 
 #Get avialable WiFi networks
 $wlan = netsh wlan show network mode=bssid
