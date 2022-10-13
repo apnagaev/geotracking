@@ -1,14 +1,14 @@
 cls
 #############ChangeMe##################
 $srvproto='https'
-$yaapikey= Get-Content C:\scripts\key.txt | -include 'key='
+$yaapikey= Get-Content C:\scripts\key.txt | Select-String -Pattern 'key='
 if ($yaapikey -eq '') {$yaapikey= Get-Content C:\scripts\key.txt}
 if ($yaapikey -eq $null) {$yaapikey= Get-Content C:\scripts\key.txt}
 $yaapikey = $yaapikey -replace 'key=',''
-$server= Get-Content C:\scripts\key.txt | -include 'server='
+$server= Get-Content C:\scripts\key.txt | Select-String -Pattern 'server='
 if ($server -eq '') {$server='geo.whereit.ru'}
 if ($server -eq $null) {$server='geo.whereit.ru'}
-$server = $server -replace 'key=',''
+$server = $server -replace 'server=',''
 ##################
 
 
