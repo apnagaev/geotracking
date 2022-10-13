@@ -2,10 +2,12 @@
 $srvproto='https'
 $yaapikey= Get-Content C:\scripts\key.txt | -include 'key='
 if ($yaapikey -eq '') {$yaapikey= Get-Content C:\scripts\key.txt}
+if ($yaapikey -eq $null) {$yaapikey= Get-Content C:\scripts\key.txt}
 $yaapikey = $yaapikey -replace 'key=',''
 $server= Get-Content C:\scripts\key.txt | -include 'server='
 if ($server -eq '') {$server='geo.whereit.ru'}
-$server = $server -replace 'server=',''
+if ($server -eq $null) {$server='geo.whereit.ru'}
+$server = $server -replace 'key=',''
 ##################
 
 $i=0
