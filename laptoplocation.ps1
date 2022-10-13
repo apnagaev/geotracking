@@ -1,4 +1,3 @@
-cls
 #####################nulled vars###################
 $i=0
 $wifiadd = ''
@@ -73,6 +72,7 @@ if ($warr.Item(0) -ne $null){
     $wifiadd = $wifiadd + ']'
     }
 $Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ipinf.query+'"}'+$wifiadd+'}'
+$yaapikey
 $Body
 
 #Yandex-locator http-post
