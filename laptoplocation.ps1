@@ -6,7 +6,7 @@ $server = $null
 $i=0
 $wifiadd = ''
 #####args##############
-Get-Service -File $arg[0]
+#Get-Service -File $arg[0]
 $file=$args[0]
 #############ChangeMe##################
 $srvproto='https'
