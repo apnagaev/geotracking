@@ -7,7 +7,7 @@ $i=0
 $wifiadd = ''
 #####args##############
 Get-Service -File $arg[0]
-$file=$arg[0]
+$file=$args[0]
 #############ChangeMe##################
 $srvproto='https'
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
