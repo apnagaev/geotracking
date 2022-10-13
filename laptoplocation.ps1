@@ -4,6 +4,7 @@ $i=0
 $wifiadd = ''
 #############ChangeMe##################
 $srvproto='https'
+$server=''
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($yaapikey -eq '') {$yaapikey= Get-Content $file | Select-String -Pattern 'key='}
 if ($yaapikey -eq '') {$yaapikey= Get-Content $file}
