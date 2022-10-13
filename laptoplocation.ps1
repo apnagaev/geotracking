@@ -9,6 +9,8 @@ if ($server -eq '') {$server='geo.whereit.ru'}
 if ($server -eq $null) {$server='geo.whereit.ru'}
 $server = $server -replace 'key=',''
 ##################
+$yaapikey
+$server
 
 $i=0
 $wifiadd = ''
