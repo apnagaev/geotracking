@@ -113,7 +113,7 @@ $signal = $netsh.Item(2)
 $signal = $signal -replace 'Сигнал',''
 $signal = $signal -replace ':',''
 $signal = $signal -replace '\s',''
-
+$signal = $signal -replace '%',''
 $ssid
 $signal
 
