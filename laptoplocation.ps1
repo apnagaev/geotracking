@@ -2,17 +2,14 @@ cls
 #####################nulled vars###################
 $i=0
 $wifiadd = ''
-#####args##############
-#Get-Service -File $arg[0]
-$file=$args[0]
 #############ChangeMe##################
 $srvproto='https'
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
-$yaapikey= Get-Content $file | Select-String -Pattern 'key='
+if ($yaapikey -eq '') {$yaapikey= Get-Content $file | Select-String -Pattern 'key='}
 if ($yaapikey -eq '') {$yaapikey= Get-Content $file}
 if ($yaapikey -eq $null) {$yaapikey= Get-Content $file}
 $yaapikey = $yaapikey -replace 'key=',''
-$server= Get-Content $file | Select-String -Pattern 'server='
+if ($server -eq '') {$server= Get-Content $file | Select-String -Pattern 'server='}
 if ($server -eq '') {$server='geo.whereit.ru'}
 if ($server -eq $null) {$server='geo.whereit.ru'}
 $server = $server -replace 'server=',''
