@@ -177,7 +177,7 @@ if ($ssid -ne '') {$ssid = '&ssid='+$ssid}
 if ($signal -ne '') {$signal = '&rssi='+$signal}
 if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
 if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
-if ($userstatus -ne '') {$userstat = '&stat='+$userstatus}
+if ($userstatus -ne '') {$userstat = '&status='+$userstatus}
 #if ($userstatus.СЕАНС -match '^\d+$') {$userstat = '&UserStatus='+$userstatus.ID}
 if ($lockuser -ne '') {$lckuser = '&Locked by='+$lockuser}
 if ($charge -ne '') {$charge = '&batt='+$charge}
