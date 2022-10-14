@@ -3,7 +3,7 @@ $i=0
 $wifiadd = ''
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.5.4'
+$ver2='2.5.5'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -161,7 +161,7 @@ if (Test-Connection $computer -Count 2 -Quiet) {
         } 
     catch { if ($user) { "$user logged on"; $userstatus='logged on' } } 
     } 
-else { "$computer Offline" } 
+#else { "$computer Offline" } 
 #}
 
 
