@@ -182,7 +182,7 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 #networkinterfacealias
 #localip
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip
-Invoke-RestMethod -Uri $uri -Method 'Post' -ContentType 'application/x-www-form-urlencoded' -Verbose
+Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Body -ContentType 'application/x-www-form-urlencoded' -Verbose
 
 
 
