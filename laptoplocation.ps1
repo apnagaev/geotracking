@@ -99,8 +99,8 @@ $charge = Get-CimInstance -ClassName Win32_Battery | Select-Object -ExpandProper
 $ac = (Get-WmiObject -Class BatteryStatus -Namespace root\wmi -ComputerName "localhost").PowerOnLine
 if ($charge -eq $null) {$charge = 100} 
 if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'AC'} else {$ac = 'Battery'}
-$charge = $charge -replace '\n',''
-$charge = $charge -replace '\s+',''
+if ($charge.Length -gt 3) {$charge = 99} 
+
 
 
 
