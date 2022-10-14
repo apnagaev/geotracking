@@ -6,6 +6,7 @@ $srvproto='http'
 $ver2='2.4'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
+if ($file -eq '') {$file='C:\scripts\key.txt'}
 $yaapikey = $key
 if ($yaapikey -eq '') {$yaapikey= Get-Content $file | Select-String -Pattern 'key='}
 if ($yaapikey -eq '') {$yaapikey= Get-Content $file}
