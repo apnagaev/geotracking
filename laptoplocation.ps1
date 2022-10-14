@@ -3,7 +3,7 @@ $i=0
 $wifiadd = ''
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.5.2'
+$ver2='2.5.3'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -104,7 +104,7 @@ if ($charge -is [int]) {
 $charge
 } 
 else{
-    $charge = 'na'
+    $charge = ''
 }
 
 
