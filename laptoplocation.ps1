@@ -4,7 +4,7 @@ $wifiadd = ''
 #############ChangeMe##################
 $srvproto='http'
 $ver2='2.4'
-$ver='Loader='+$ver1+' '+'Script='+$ver2
+$ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 $yaapikey = $key
 if ($yaapikey -eq '') {$yaapikey= Get-Content $file | Select-String -Pattern 'key='}
@@ -162,8 +162,8 @@ if ($ipinf.isp -ne '') {$ipinf.isp = '&operator='+$ipinf.isp}
 if ($user -ne '') {$login = '&driverUniqueId='+$user}
 if ($username.Item(7) -ne '') {$logt = '&logintime='+$username.Item(6)+' '+$username.Item(7)}
 if ($domain.domain -ne '') {$domain = '&domain='+$domain.domain}
-if ($ssid -ne '') {$ssid = '&rssi='+$ssid}
-if ($signal -ne '') {$signal = '&signal='+$signal}
+if ($ssid -ne '') {$ssid = '&ssid='+$ssid}
+if ($signal -ne '') {$signal = '&rssi='+$signal}
 if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
 if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
 if ($userstatus -ne '') {$userstat = '&status='+$userstatus}
@@ -180,7 +180,7 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
 #networkinterfacealias
 #localip
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&firmwareversion'+$ver+$localip
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&firmwareversion='+$ver+$localip
 Invoke-RestMethod -Uri $uri -OutFile 'loc.log' -Method 'Post' -Body $uri -ContentType 'application/x-www-form-urlencoded' -MaximumRedirection 0
 del 'loc.log'
 
