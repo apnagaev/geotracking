@@ -13,7 +13,7 @@ if ($yaapikey -eq '') {$yaapikey= Get-Content $file}
 if ($yaapikey -eq $null) {$yaapikey= Get-Content $file}
 $yaapikey = $yaapikey -replace '$key=',''
 $yaapikey = $yaapikey -replace 'key=',''
-$yaapikey = $yaapikey -replace 'server=geo.nagaev.biz',''
+$yaapikey = $yaapikey -replace ' server=geo.nagaev.biz',''
 if ($server -eq '') {$server= Get-Content $file | Select-String -Pattern 'server='}
 if ($server -eq '') {$server='geo.whereit.ru'}
 if ($server -eq $null) {$server='geo.whereit.ru'}
