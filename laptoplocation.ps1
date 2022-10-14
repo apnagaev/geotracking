@@ -3,7 +3,7 @@ $i=0
 $wifiadd = ''
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.5.1'
+$ver2='2.5.2'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -180,7 +180,7 @@ if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
 if ($userstatus -ne '') {$userstat = '&status='+$userstatus}
 #if ($userstatus.СЕАНС -match '^\d+$') {$userstat = '&UserStatus='+$userstatus.ID}
 if ($lockuser -ne '') {$lckuser = '&Locked by='+$lockuser}
-if ($charge -ne '') {$charge = 'batt='+$charge}
+if ($charge -ne '') {$charge = '&batt='+$charge}
 
 
 
