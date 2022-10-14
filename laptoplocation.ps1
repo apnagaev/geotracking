@@ -162,7 +162,7 @@ if ($ipinf.isp -ne '') {$ipinf.isp = '&operator='+$ipinf.isp}
 if ($user -ne '') {$login = '&driverUniqueId='+$user}
 if ($username.Item(7) -ne '') {$logt = '&logintime='+$username.Item(6)+' '+$username.Item(7)}
 if ($domain.domain -ne '') {$domain = '&domain='+$domain.domain}
-if ($ssid -ne '') {$ssid = '&ssid='+$ssid}
+if ($ssid -ne '') {$ssid = '&type='+$ssid}
 if ($signal -ne '') {$signal = '&rssi='+$signal}
 if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
 if ($network.Name -ne $null) {$networkName = '&net_name='+$network.Name}
