@@ -3,7 +3,7 @@ $i=0
 $wifiadd = ''
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.4.2'
+$ver2='2.4.3'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -100,7 +100,8 @@ $ac = (Get-WmiObject -Class BatteryStatus -Namespace root\wmi -ComputerName "loc
 if ($charge -eq $null) {$charge = 100} 
 if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'AC'} else {$ac = 'Battery'}
 $charge = $charge -replace '\n',''
-$charge = $charge -replace ' ',''
+$charge = $charge -replace '\s+',''
+
 
 
 [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("cp866")
