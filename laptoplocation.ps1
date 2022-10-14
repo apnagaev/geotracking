@@ -3,7 +3,7 @@ $i=0
 $wifiadd = ''
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.4.1'
+$ver2='2.4.2'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -98,7 +98,8 @@ $charge = Get-CimInstance -ClassName Win32_Battery | Select-Object -ExpandProper
 $ac = (Get-WmiObject -Class BatteryStatus -Namespace root\wmi -ComputerName "localhost").PowerOnLine
 if ($charge -eq $null) {$charge = 100} 
 if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'AC'} else {$ac = 'Battery'}
-
+$charge = $charge -replace '\n',''
+$charge = $charge -replace ' ',''
 
 
 [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("cp866")
@@ -182,7 +183,7 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 #networkinterfacealias
 #localip
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+'&batt='+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip
-$debug=$Body+'TEST'+$uri
+$debug=$Body
 Invoke-RestMethod -Uri $uri -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
 
 
