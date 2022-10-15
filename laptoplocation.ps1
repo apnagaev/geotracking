@@ -3,7 +3,7 @@ $i=0
 $wifiadd = ''
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.5.6'
+$ver2='2.6'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -191,9 +191,29 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
 #networkinterfacealias
 #localip
+
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+'&realip='+$ipinf.query+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'
 $debug=$Body
+try{
 Invoke-RestMethod -Uri $uri -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
+}
+
+                    catch  {
+                    Write('HTTP Error')
+                    $tlogin=$user
+                    $user
+                    $tlogin = $tlogin -replace 'ATOL\\',''
+                    $tlogin = $tlogin -replace 'NAGAEV\\',''
+                    $tlogin
+
+                    $body = '{"name": "'+$tlogin+'@atol.ru","uniqueId": "'+$deviceid+'","disabled": false,"positionId": 0,"groupId": 1,"attributes": {}}'
+                    Invoke-RestMethod  -Headers @{Authorization=("Basic {0}" -f $base64)} -Uri $apiUri  -Method 'Post' -Body $body -ContentType 'application/json' -Verbose
+                       #Start-Sleep 30
+                       #Invoke-RestMethod -Uri $uri  -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
+              
+                    }
+
+
 
 
 
