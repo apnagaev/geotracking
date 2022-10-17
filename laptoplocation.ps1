@@ -6,7 +6,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.8'
+$ver2='2.8.1'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -72,7 +72,7 @@ if ($ipinf.query -eq ''){
 
 
 #Make json for yandex-locator
-$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ipinf.query+'"}}'
+#$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ip+'"}}'
 if ($warr.Item(0) -ne $null){
     $wifiadd = ', "wifi_networks": [ '
     ForEach ($item in $warr){
@@ -83,7 +83,7 @@ if ($warr.Item(0) -ne $null){
     $wifiadd = $wifiadd -replace ".{1}$"
     $wifiadd = $wifiadd + ']'
     }
-$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ipinf.query+'"}'+$wifiadd+'}'
+$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ip+'"}'+$wifiadd+'}'
 write('yaapikey='+$yaapikey)
 write('server='+$server)
 $Body
