@@ -4,7 +4,7 @@ $wifiadd = ''
 $ownips=@('109.196.132','178.57.71')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.6.5'
+$ver2='2.7'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -185,8 +185,32 @@ if ($null -ne ($ownips | ? { $ipinf.query -match $_ })) {
 
 
 
+$manuname.PCSystemType
+if ($manuname.PCSystemType -eq '') {$PCSystemType = ''}
+if ($manuname.PCSystemType -eq '6') {$PCSystemType = '&PCSystemType='+'Appliance PC'}
+if ($manuname.PCSystemType -eq '1') {$PCSystemType = '&PCSystemType='+'Desktop'}
+if ($manuname.PCSystemType -eq '4') {$PCSystemType = '&PCSystemType='+'Enterprise Server'}
+if ($manuname.PCSystemType -eq '8') {$PCSystemType = '&PCSystemType='+'other'}
+if ($manuname.PCSystemType -eq '2') {$PCSystemType = '&PCSystemType='+'Mobile device'}
+if ($manuname.PCSystemType -eq '7') {$PCSystemType = '&PCSystemType='+'Performance server'}
+if ($manuname.PCSystemType -eq '5') {$PCSystemType = '&PCSystemType='+'SOHO Server'}
+if ($manuname.PCSystemType -eq '0') {$PCSystemType = '&PCSystemType='+'unspecified'}
+if ($manuname.PCSystemType -eq '3') {$PCSystemType = '&PCSystemType='+'Workstation'}
+$memory=[math]::Round([long]$manuname.TotalPhysicalMemory/([math]::Pow(1024,3)),0)
+$memory
+$serial = Get-wmiobject win32_bios | ForEach-Object {$_.serialnumber}
+$serial
 #http-get to geoserver
-#if ($result.position.altitude -ne '') {$result.position.altitude = '&altitude='+$result.position.altitude}
+if ($manuname.Manufacturer -ne '') {$Manufacturer = '&Manufacturer='+$manuname.Manufacturer}
+if ($manuname.SystemFamily -ne '') {$SystemFamily = '&SystemFamily='+$manuname.SystemFamily}
+if ($manuname.Model -ne '') {$Model = '&Model='+$manuname.Model}
+if ($manuname.NumberOfLogicalProcessors -ne '') {$NumberOfLogicalProcessors = '&NumberOfLogicalProcessors='+$manuname.NumberOfLogicalProcessors}
+if ($manuname.NumberOfProcessors -ne '') {$NumberOfProcessors = '&NumberOfProcessors='+$NumberOfProcessors.Model}
+if ($serial -ne '') {$serial = '&serial='+$serial}
+if ($memory -ne '') {$memory = '&memory='+$memory}
+if ($eastruntime -ne '') {$eastruntime = '&eastruntime='+$eastruntime}
+if ($battstatus -ne '') {$battstatus = '&battstatus='+$battstatus}
+
 $result.position.altitude = '&altitude='+$result.position.altitude
 if ($ipinf.zip -ne '') {$ipinf.zip = '&zip='+$ipinf.zip}
 if ($ipinf.isp -ne '') {$ipinf.isp = '&operator='+$ipinf.isp}
@@ -212,7 +236,7 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 #networkinterfacealias
 #localip
 
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ipinf.query+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ipinf.query+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$serial+$Manufacturer+$SystemFamily+$Model+$NumberOfLogicalProcessors+$serial+$memory+$eastruntime+$battstatus
 $debug=$Body
 try{
 Invoke-RestMethod -Uri $uri -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
