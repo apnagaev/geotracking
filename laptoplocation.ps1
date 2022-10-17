@@ -1,11 +1,11 @@
 #####################nulled vars###################
 $i=0
 $wifiadd = ''
-#$ownips=@('109.196.132','178.57.71')
-$ownips=@('109.196.132')
+$ownips=@('109.196.132','178.57.71')
+#$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.7.3'
+$ver2='2.7.4'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
