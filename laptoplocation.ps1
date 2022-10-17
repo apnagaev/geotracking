@@ -5,7 +5,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.7.4'
+$ver2='2.7.5'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -61,6 +61,12 @@ $warr = $warr -replace '^.*(?=.{12}$)'
 $wsarr = $wlan -match '%'
 $wsarr = $wsarr -replace '%',''
 $wsarr = $wsarr -replace '^.*(?=.{2}$)'
+
+if ($ipinf.query -eq ''){
+$ipurl = 'http://checkip.amazonaws.com/'
+$ip = Invoke-RestMethod -uri $ipurl
+$ipinf.query=$ip
+}
 
 
 #Make json for yandex-locator
