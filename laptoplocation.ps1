@@ -218,7 +218,7 @@ Invoke-RestMethod -Uri $uri -Method 'Post' -Body $debug -ContentType 'applicatio
                     $tlogin = $tlogin -replace 'NAGAEV\\',''
                     $tlogin
 
-                    $body = '{"name": "'+$tlogin+'@atol.ru","uniqueId": "'+$deviceid+'","disabled": false,"positionId": 0,"groupId": 1,"attributes": {}}'
+                    $body = '{"name": "'+$tlogin+'@atol.ru","uniqueId": "'+$deviceid+'","disabled": false,"positionId": 0,"groupId": 2,"attributes": {}}'
                     Invoke-RestMethod  -Headers @{Authorization=("Basic {0}" -f $base64)} -Uri $apiUri  -Method 'Post' -Body $body -ContentType 'application/json' -Verbose
                        #Start-Sleep 30
                        #Invoke-RestMethod -Uri $uri  -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
