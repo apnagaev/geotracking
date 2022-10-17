@@ -176,8 +176,9 @@ if (Test-Connection $computer -Count 2 -Quiet) {
 
 
 
-
-if ($null -ne ($ownips | ? { $ipinf.query -match $_ })) {
+if (($null -ne ($ownips | ? { $ipinf.query -match $_ })) -and ($null -eq ($result.position.latitude | ? { '55.' -match $_ })) -and ($null -eq ($result.position.longitude | ? { '37.6' -match $_ }))) {
+     write-host ('LocalPoint')
+#if ($null -ne ($ownips | ? { $ipinf.query -match $_ })) {
     $result.position.latitude = '55.808443'
     $result.position.longitude = '37.629943'
     $result.position.precision = '50'
