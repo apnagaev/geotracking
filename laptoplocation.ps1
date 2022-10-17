@@ -108,7 +108,7 @@ else{
     $charge = ''
 }
 $eastruntime = Get-CimInstance -ClassName Win32_Battery | Select-Object -ExpandProperty EstimatedRunTime
-$battstatus Get-CimInstance -ClassName Win32_Battery | Select-Object -ExpandProperty Status
+$battstatus = Get-CimInstance -ClassName Win32_Battery | Select-Object -ExpandProperty Status
 if ($eastruntime -is [int]) {
 $eastruntime
 } 
