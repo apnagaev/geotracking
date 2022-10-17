@@ -4,7 +4,7 @@ $wifiadd = ''
 $ownips=@('109.196.132','178.57.71')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.7'
+$ver2='2.7.1'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -187,22 +187,22 @@ if ($null -ne ($ownips | ? { $ipinf.query -match $_ })) {
 
 $manuname.PCSystemType
 if ($manuname.PCSystemType -eq '') {$PCSystemType = ''}
-if ($manuname.PCSystemType -eq '6') {$PCSystemType = '&PCSystemType='+'Appliance PC'}
-if ($manuname.PCSystemType -eq '1') {$PCSystemType = '&PCSystemType='+'Desktop'}
-if ($manuname.PCSystemType -eq '4') {$PCSystemType = '&PCSystemType='+'Enterprise Server'}
-if ($manuname.PCSystemType -eq '8') {$PCSystemType = '&PCSystemType='+'other'}
-if ($manuname.PCSystemType -eq '2') {$PCSystemType = '&PCSystemType='+'Mobile device'}
-if ($manuname.PCSystemType -eq '7') {$PCSystemType = '&PCSystemType='+'Performance server'}
-if ($manuname.PCSystemType -eq '5') {$PCSystemType = '&PCSystemType='+'SOHO Server'}
-if ($manuname.PCSystemType -eq '0') {$PCSystemType = '&PCSystemType='+'unspecified'}
-if ($manuname.PCSystemType -eq '3') {$PCSystemType = '&PCSystemType='+'Workstation'}
+if ($manuname.PCSystemType -eq '6') {$PCSystemType = '&type='+'Appliance PC'}
+if ($manuname.PCSystemType -eq '1') {$PCSystemType = '&type='+'Desktop'}
+if ($manuname.PCSystemType -eq '4') {$PCSystemType = '&type='+'Enterprise Server'}
+if ($manuname.PCSystemType -eq '8') {$PCSystemType = '&type='+'other'}
+if ($manuname.PCSystemType -eq '2') {$PCSystemType = '&type='+'Mobile device'}
+if ($manuname.PCSystemType -eq '7') {$PCSystemType = '&type='+'Performance server'}
+if ($manuname.PCSystemType -eq '5') {$PCSystemType = '&type='+'SOHO Server'}
+if ($manuname.PCSystemType -eq '0') {$PCSystemType = '&type='+'unspecified'}
+if ($manuname.PCSystemType -eq '3') {$PCSystemType = '&type='+'Workstation'}
 $memory=[math]::Round([long]$manuname.TotalPhysicalMemory/([math]::Pow(1024,3)),0)
 $memory
 $serial = Get-wmiobject win32_bios | ForEach-Object {$_.serialnumber}
 $serial
 #http-get to geoserver
 if ($manuname.Manufacturer -ne '') {$Manufacturer = '&Manufacturer='+$manuname.Manufacturer}
-if ($manuname.SystemFamily -ne '') {$SystemFamily = '&SystemFamily='+$manuname.SystemFamily}
+if ($manuname.SystemFamily -ne '') {$SystemFamily = '&versionHw='+$manuname.SystemFamily}
 if ($manuname.Model -ne '') {$Model = '&Model='+$manuname.Model}
 if ($manuname.NumberOfLogicalProcessors -ne '') {$NumberOfLogicalProcessors = '&NumberOfLogicalProcessors='+$manuname.NumberOfLogicalProcessors}
 if ($manuname.NumberOfProcessors -ne '') {$NumberOfProcessors = '&NumberOfProcessors='+$NumberOfProcessors.Model}
