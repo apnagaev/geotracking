@@ -4,7 +4,7 @@ $wifiadd = ''
 $ownips=@('109.196.132','178.57.71')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.7.1'
+$ver2='2.7.2'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -184,7 +184,7 @@ if ($null -ne ($ownips | ? { $ipinf.query -match $_ })) {
 }
 
 
-
+$winver='&winve=Windows '+[System.Environment]::OSVersion.Version.Major+' Build '+[System.Environment]::OSVersion.Version.Build
 $manuname.PCSystemType
 if ($manuname.PCSystemType -eq '') {$PCSystemType = ''}
 if ($manuname.PCSystemType -eq '6') {$PCSystemType = '&type='+'Appliance PC'}
@@ -236,7 +236,7 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 #networkinterfacealias
 #localip
 
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ipinf.query+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$serial+$Manufacturer+$SystemFamily+$Model+$NumberOfLogicalProcessors+$serial+$memory+$eastruntime+$battstatus
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ipinf.query+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$serial+$Manufacturer+$SystemFamily+$Model+$NumberOfLogicalProcessors+$serial+$memory+$eastruntime+$battstatus+$winver
 $debug=$Body
 try{
 Invoke-RestMethod -Uri $uri -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
