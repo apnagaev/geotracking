@@ -169,7 +169,7 @@ if (Test-Connection $computer -Count 2 -Quiet) {
 
 
 
-if ($ipinf.isp -match $ownips) {
+if (+$ipinf.query -match $ownips) {
     $result.position.latitude = '55.808443'
     $result.position.longitude = '37.629943'
     $result.position.precision = '50'
