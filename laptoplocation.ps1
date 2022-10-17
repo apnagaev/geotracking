@@ -5,7 +5,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.7.6'
+$ver2='2.7.7'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -182,13 +182,14 @@ if (Test-Connection $computer -Count 2 -Quiet) {
 
 
 
-if (($null -ne ($ownips | ? { $ipinf.query -match $_ })) -and ($null -eq ($result.position.latitude | ? { '55.' -match $_ })) -and ($null -eq ($result.position.longitude | ? { '37.6' -match $_ }))) {
+if (($null -ne ($ownips | ? { $ip -match $_ })) -and ($null -eq ($result.position.latitude | ? { '55.' -match $_ })) -and ($null -eq ($result.position.longitude | ? { '37.6' -match $_ }))) {
      write-host ('LocalPoint')
 #if ($null -ne ($ownips | ? { $ipinf.query -match $_ })) {
     $result.position.latitude = '55.808443'
     $result.position.longitude = '37.629943'
     $result.position.precision = '50'
     $result.position.altitude = '40'
+    $ip=$ip+' atol'
 }
 
 $winver='&winver=Windows '+[System.Environment]::OSVersion.Version.Major+' '+(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name DisplayVersion).DisplayVersion+' Build '+[System.Environment]::OSVersion.Version.Build
