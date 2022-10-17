@@ -1,9 +1,10 @@
 #####################nulled vars###################
 $i=0
 $wifiadd = ''
+$ownips="109.196.132","178.57.71"
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.6'
+$ver2='2.6.1'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -167,7 +168,18 @@ if (Test-Connection $computer -Count 2 -Quiet) {
 
 
 
+
+if ($ipinf.isp -match $ownips) {
+    $result.position.latitude = '55.808443'
+    $result.position.longitude = '37.629943'
+    $result.position.precision = '50'
+    $result.position.altitude = '40'
+}
+
+
+
 #http-get to geoserver
+if ($result.position.altitude -ne '') {$result.position.altitude = '&altitude='+$result.position.altitude}
 if ($ipinf.zip -ne '') {$ipinf.zip = '&zip='+$ipinf.zip}
 if ($ipinf.isp -ne '') {$ipinf.isp = '&operator='+$ipinf.isp}
 if ($user -ne '') {$login = '&driverUniqueId='+$user}
