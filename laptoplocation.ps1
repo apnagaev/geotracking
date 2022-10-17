@@ -4,7 +4,7 @@ $wifiadd = ''
 $ownips=@('109.196.132','178.57.71')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.7.2'
+$ver2='2.7.3'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -183,8 +183,7 @@ if ($null -ne ($ownips | ? { $ipinf.query -match $_ })) {
     $result.position.altitude = '40'
 }
 
-
-$winver='&winve=Windows '+[System.Environment]::OSVersion.Version.Major+' Build '+[System.Environment]::OSVersion.Version.Build
+$winver='&winver=Windows '+[System.Environment]::OSVersion.Version.Major+' '+(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name DisplayVersion).DisplayVersion+' Build '+[System.Environment]::OSVersion.Version.Build
 $manuname.PCSystemType
 if ($manuname.PCSystemType -eq '') {$PCSystemType = ''}
 if ($manuname.PCSystemType -eq '6') {$PCSystemType = '&type='+'Appliance PC'}
