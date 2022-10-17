@@ -4,7 +4,7 @@ $wifiadd = ''
 $ownips=@('109.196.132','178.57.71')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.6.4'
+$ver2='2.6.5'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -179,7 +179,8 @@ if ($null -ne ($ownips | ? { $ipinf.query -match $_ })) {
 
 
 #http-get to geoserver
-if ($result.position.altitude -ne '') {$result.position.altitude = '&altitude='+$result.position.altitude}
+#if ($result.position.altitude -ne '') {$result.position.altitude = '&altitude='+$result.position.altitude}
+$result.position.altitude = '&altitude='+$result.position.altitude
 if ($ipinf.zip -ne '') {$ipinf.zip = '&zip='+$ipinf.zip}
 if ($ipinf.isp -ne '') {$ipinf.isp = '&operator='+$ipinf.isp}
 if ($user -ne '') {$login = '&driverUniqueId='+$user}
