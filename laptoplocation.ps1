@@ -1,11 +1,12 @@
 #####################nulled vars###################
 $i=0
 $wifiadd = ''
+$dtcs=''
 $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.7.7'
+$ver2='2.8'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -64,8 +65,9 @@ $wsarr = $wsarr -replace '^.*(?=.{2}$)'
 
 $ip=$ipinf.query
 if ($ipinf.query -eq ''){
-$ipurl = 'http://checkip.amazonaws.com/'
-$ip = Invoke-RestMethod -uri $ipurl
+    $ipurl = 'http://checkip.amazonaws.com/'
+    $ip = Invoke-RestMethod -uri $ipurl
+    $dtcs='ipinf.query'
 }
 
 
