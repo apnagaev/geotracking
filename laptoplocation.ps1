@@ -6,7 +6,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.8.2'
+$ver2='2.8.2d'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -48,6 +48,7 @@ Get-Command '*json'
 #Get white IP information
 $ipinf =  (Invoke-RestMethod http://ip-api.com/json/)
 #$ipinf
+$dtcs=$dtcs+' '+$ipinf.query
 
 #Get avialable WiFi networks
 $wlan = netsh wlan show network mode=bssid
@@ -67,9 +68,9 @@ $ip=$ipinf.query
 if ($ipinf.query -eq ''){
     $ipurl = 'http://checkip.amazonaws.com/'
     $ip = Invoke-RestMethod -uri $ipurl
-    $dtcs='ipinf.query'
+    $dtcs=$dtcs+' empty ip'
 }
-
+$dtcs=$dtcs+' '+$ip
 
 #Make json for yandex-locator
 #$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ip+'"}}'
@@ -247,7 +248,7 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 #localip
 
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$serial+$Manufacturer+$SystemFamily+$Model+$NumberOfLogicalProcessors+$serial+$memory+$eastruntime+$battstatus+$winver+$dtcs
-$debug='debug_string'
+$debug=$dtcs+' '+$ip
 try{
 Invoke-RestMethod -Uri $uri -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
 }
