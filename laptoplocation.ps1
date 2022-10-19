@@ -6,7 +6,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.3'
+$ver2='2.9.4'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -196,7 +196,7 @@ if (($null -ne ($ownips | ? { $ip -match $_ })) -and ($null -eq ($result.positio
     $dtcs=$dtcs+' wrong office location'
 }
 $rdps='&in1=false'
-if ($user -eq ''){
+if (($user -eq $null) -and ($userstatus=$null)){
     $rdp=QUERY SESSION
     $rdp = $rdp  -replace "\s+", ","
     $rdp = $rdp  -replace "Active", "Активно"
@@ -208,7 +208,7 @@ if ($user -eq ''){
     $rdps='&in1=true'+$user
     $userstatus='Logged on RDP'
     }
-
+$dtcs=$dtcs+' '+$user
 
 
 
