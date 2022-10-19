@@ -282,7 +282,8 @@ $debug= QUERY SESSION
 #$uri = $uri  -replace "\s+", ""
 
 $debug=$duser+$duserstatus
-$debug=$debug+ QUERY SESSION
+$qs=QUERY SESSION
+$debug=$debug+$qs
 
         
 try{
