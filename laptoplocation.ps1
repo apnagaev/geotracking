@@ -9,7 +9,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.5c'
+$ver2='2.9.5d'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -269,7 +269,7 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 #networkinterfacealias
 #localip
 
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$serial+$Manufacturer+$SystemFamily+$Model+$NumberOfLogicalProcessors+$serial+$memory+$eastruntime+$battstatus+$winver+$dtcs+$Ignition+$rdps
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$serial+$Manufacturer+$SystemFamily+$Model+$NumberOfLogicalProcessors+$serial+$memory+$eastruntime+$battstatus+$winver+$dtcs+$Ignition
 $debug= QUERY SESSION
 try{
 Invoke-RestMethod -Uri $uri -Method 'Post' -ContentType 'application/x-www-form-urlencoded' -Verbose
