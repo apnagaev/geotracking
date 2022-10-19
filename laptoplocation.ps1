@@ -6,7 +6,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.1'
+$ver2='2.9.2'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -195,7 +195,7 @@ if (($null -ne ($ownips | ? { $ip -match $_ })) -and ($null -eq ($result.positio
     $ip=$ip+' atol'
     $dtcs=$dtcs+' wrong office location'
 }
-$rdps='&rdp=False'
+$rdps='&in1=false'
 if ($user -eq ''){
     $rdp=QUERY SESSION
     $rdp = $rdp  -replace "\s+", ","
@@ -205,7 +205,7 @@ if ($user -eq ''){
     $rdp = $rdp -match 'Активно'
     $rdp = $rdp | ConvertFrom-Csv -Delimiter ',' -Header 'session','user','id','status'
     $user = $rdp
-    $rdps='&rdp=True'+$user
+    $rdps='&in1=true'+$user
     }
 
 
