@@ -9,7 +9,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.5f'
+$ver2='2.9.5g'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -212,8 +212,8 @@ if (($user -eq $null) -and ($userstatus -eq $null)){
     $user
     
     if (($rdp[0].user -ne 'rdp-tcp') -and ($rdp[0].user -ne '')) {
-        $user = $rdp[0].user
-        $userstatus = "loggedrdp"
+        $duser = $rdp[0].user
+        $duserstatus = "logged rdp"
         
     }
 }
@@ -262,10 +262,10 @@ if ($userstatus -ne '') {$userstat = '&status='+$userstatus}
 #if ($userstatus.СЕАНС -match '^\d+$') {$userstat = '&UserStatus='+$userstatus.ID}
 if ($lockuser -ne '') {$lckuser = '&Locked by='+$lockuser}
 if ($charge -ne '') {$charge = '&batt='+$charge}
-$Ignition = ''
+$Ignition = '&ignition=false'
 if ($userstatus -eq 'logged on') {$Ignition = '&ignition=true'}
 if ($userstatus -eq 'locked') {$Ignition = '&ignition=false'}
-if ($userstatus -eq 'loggedrdp') {$Ignition = '&ignition=true'}
+if ($userstatus -eq 'logged rdp') {$Ignition = '&ignition=true'}
 
 $localip = Get-NetIPAddress -InterfaceAlias $network.InterfaceAlias
 $localip | ConvertTo-Json
@@ -282,8 +282,10 @@ $debug= QUERY SESSION
 #$uri = $uri  -replace "\s+", ""
 
 $debug= QUERY SESSION
+$debug=$debug+$duser+$duserstatus
+        
 try{
-Invoke-RestMethod -Uri $uri -Method 'Post' -ContentType 'application/x-www-form-urlencoded' -Verbose
+Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Debug -ContentType 'application/x-www-form-urlencoded' -Verbose
 }
 
                     catch  {
