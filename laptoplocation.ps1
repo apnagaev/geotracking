@@ -9,7 +9,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.6'
+$ver2='2.9.5e'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -168,6 +168,7 @@ $computer = 'localhost'
         $user = $null 
         $lockuser = ''
         $lckuser = $null
+        $userstatus = $null
 #function GetRemoteLogonStatus ($computer = 'localhost') { 
 if (Test-Connection $computer -Count 2 -Quiet) { 
     try { 
@@ -198,21 +199,25 @@ if (($null -ne ($ownips | ? { $ip -match $_ })) -and ($null -eq ($result.positio
     $ip=$ip+' atol'
     $dtcs=$dtcs+' wrong office location'
 }
-$rdps='&in1=false'
-if (($user -eq $null) -and ($userstatus -eq $null)){
-    $rdp=QUERY SESSION
-    $rdp = $rdp  -replace "\s+", ","
-    $rdp = $rdp  -replace "Active", "Активно"
 
+
+
+if (($user -eq $null) -and ($userstatus -eq $null)){
+    $rdp = QUERY SESSION
+    $rdp = $rdp  -replace "\s+", ";"
+    $rdp = $rdp  -replace "Active", "Активно"
     $rdp = $rdp -match 'rdp-tcp'
     $rdp = $rdp -match 'Активно'
-    $rdp = $rdp | ConvertFrom-Csv -Delimiter ',' -Header 'session','user','id','status'
-    $user = $rdp[0].user
-    if ($rdp[0].user='rdp-tcp') {$user='error'}
-    #$rdps='&in1=true'
-    $userstatus='Logged by RDP'
+    $rdp = $rdp | ConvertFrom-Csv -Delimiter ';' -Header 'session','user','id','status'
+    $user
+    
+    if (($rdp[0].user -ne 'rdp-tcp') -and ($rdp[0].user -ne '')) {
+        $user = $rdp[0].user
+        $userstatus = "loggedrdp"
+        
     }
-$dtcs=$dtcs+' '+$user
+}
+
 
 
 
@@ -260,7 +265,7 @@ if ($charge -ne '') {$charge = '&batt='+$charge}
 $Ignition = ''
 if ($userstatus -eq 'logged on') {$Ignition = '&ignition=true'}
 if ($userstatus -eq 'locked') {$Ignition = '&ignition=false'}
-if ($userstatus -eq 'Logged by RDP') {$Ignition = '&ignition=true'}
+if ($userstatus -eq 'loggedrdp') {$Ignition = '&ignition=true'}
 
 $localip = Get-NetIPAddress -InterfaceAlias $network.InterfaceAlias
 $localip | ConvertTo-Json
@@ -270,7 +275,12 @@ if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 #networkinterfacealias
 #localip
 
+#$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$serial+$Manufacturer+$SystemFamily+$Model+$NumberOfLogicalProcessors+$serial+$memory+$eastruntime+$battstatus+$winver+$dtcs+$Ignition
+
 $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$serial+$Manufacturer+$SystemFamily+$Model+$NumberOfLogicalProcessors+$serial+$memory+$eastruntime+$battstatus+$winver+$dtcs+$Ignition
+$debug= QUERY SESSION
+#$uri = $uri  -replace "\s+", ""
+
 $debug= QUERY SESSION
 try{
 Invoke-RestMethod -Uri $uri -Method 'Post' -ContentType 'application/x-www-form-urlencoded' -Verbose
@@ -310,12 +320,14 @@ $yaapikey
 $server
 Write-Host('-----------------DEBUG----------------')
 $ver
-$debug
-$rdps
-$user
 $userstatus
-$userstat
+$user
 $rdp[0].user
+$uri
+$userstat
+$login
+$Ignition
+
 
 # SIG # Begin signature block
 # MIIIDgYJKoZIhvcNAQcCoIIH/zCCB/sCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
