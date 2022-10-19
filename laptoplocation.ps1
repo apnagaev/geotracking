@@ -9,7 +9,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.5h'
+$ver2='2.9.5i'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -281,8 +281,9 @@ $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$resul
 $debug= QUERY SESSION
 #$uri = $uri  -replace "\s+", ""
 
-$debug= QUERY SESSION
-$debug=$debug+$duser+$duserstatus
+$debug=$duser+$duserstatus
+$debug=$debug+ QUERY SESSION
+
         
 try{
 Invoke-RestMethod -Uri $uri -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
