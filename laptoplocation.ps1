@@ -6,7 +6,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.2'
+$ver2='2.9.3'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -206,6 +206,7 @@ if ($user -eq ''){
     $rdp = $rdp | ConvertFrom-Csv -Delimiter ',' -Header 'session','user','id','status'
     $user = $rdp
     $rdps='&in1=true'+$user
+    $userstatus='Logged on RDP'
     }
 
 
