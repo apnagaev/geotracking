@@ -9,7 +9,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.5g'
+$ver2='2.9.5h'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -285,7 +285,7 @@ $debug= QUERY SESSION
 $debug=$debug+$duser+$duserstatus
         
 try{
-Invoke-RestMethod -Uri $uri -Method 'Post' -Body $Debug -ContentType 'application/x-www-form-urlencoded' -Verbose
+Invoke-RestMethod -Uri $uri -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
 }
 
                     catch  {
