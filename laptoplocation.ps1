@@ -2,11 +2,13 @@
 $i=0
 $wifiadd = ''
 $dtcs='&dtcs='
+$user = $null
+$userstatus = $null
 $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.5a'
+$ver2='2.9.5b'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -205,7 +207,7 @@ if (($user -eq $null) -and ($userstatus -eq $null)){
     $rdp = $rdp -match 'Активно'
     $rdp = $rdp | ConvertFrom-Csv -Delimiter ',' -Header 'session','user','id','status'
     $user = $rdp[0].user
-    $rdps='&in1=true'+$user
+    $rdps='&in1=true'
     $userstatus='Logged via RDP'
     }
 $dtcs=$dtcs+' '+$user
