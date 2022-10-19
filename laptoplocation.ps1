@@ -208,6 +208,7 @@ if (($user -eq $null) -and ($userstatus -eq $null)){
     $rdp = $rdp -match 'Активно'
     $rdp = $rdp | ConvertFrom-Csv -Delimiter ',' -Header 'session','user','id','status'
     $user = $rdp[0].user
+    if {$rdp[0].user='rdp-tcp') {$user='error'}
     $rdps='&in1=true'
     $userstatus='Logged via RDP'
     }
