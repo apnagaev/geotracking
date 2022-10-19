@@ -4,6 +4,7 @@ $wifiadd = ''
 $dtcs='&dtcs='
 $user = $null
 $userstatus = $null
+$rdps = $null
 $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
