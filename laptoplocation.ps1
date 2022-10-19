@@ -307,7 +307,8 @@ write('URL='+$uri)
 write('ZIP='+$ipinf.zip)
 $yaapikey
 $server
-Write-Host('-----------------DEBUG-----------------')
+Write-Host('-----------------DEBUG----------------')
+$ver
 $debug
 $rdps
 $user
