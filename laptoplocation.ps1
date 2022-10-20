@@ -7,9 +7,10 @@ $userstatus = $null
 $rdps = $null
 $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
+$satVisible=''
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.6f'
+$ver2='2.9.6g'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -71,9 +72,8 @@ $ip=$ipinf.query
 if (($ip -eq '') -or($ip -eq $null)){
     $ipurl = 'http://checkip.amazonaws.com/'
     $ip = Invoke-RestMethod -uri $ipurl
-    $dtcs=$dtcs+' empty ip'
 }
-$dtcs=$dtcs+' '+$ip
+
 
 #Make json for yandex-locator
 #$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ip+'"}}'
@@ -197,7 +197,8 @@ if (($null -ne ($ownips | ? { $ip -match $_ })) -and ($null -eq ($result.positio
     $result.position.precision = '50'
     $result.position.altitude = '40'
     $ip=$ip+' atol'
-    $dtcs=$dtcs+' wrong office location'
+    $satVisible='&satVisible=99'
+    $dtcs='wrong office location'
 }
 
 
