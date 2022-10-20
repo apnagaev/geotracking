@@ -9,7 +9,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.6'
+$ver2='2.9.6a'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -212,8 +212,8 @@ if (($user -eq $null) -and ($userstatus -eq $null)){
     $user
     
     if (($rdp[0].user -ne 'rdp-tcp') -and ($rdp[0].user -ne '')) {
-        $duser = $rdp[0].user
-        $duserstatus = "logged rdp"
+        $user = $rdp[0].user
+        $userstatus = "logged rdp"
         
     }
 }
@@ -269,7 +269,7 @@ $localip = Get-NetIPAddress -InterfaceAlias $network.InterfaceAlias
 $localip | ConvertTo-Json
 if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
-
+$deviceid=$deviceid.ToLower()
 #networkinterfacealias
 #localip
 
