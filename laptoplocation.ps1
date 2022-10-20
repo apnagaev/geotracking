@@ -220,7 +220,7 @@ if (($user -eq $null) -and ($userstatus -eq $null)){
 
 
 
-
+$user=$user.ToLower()
 $winver='&winver=Windows '+[System.Environment]::OSVersion.Version.Major+' '+(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name DisplayVersion).DisplayVersion+' Build '+[System.Environment]::OSVersion.Version.Build
 $manuname.PCSystemType
 if ($manuname.PCSystemType -eq '') {$PCSystemType = ''}
@@ -234,9 +234,7 @@ if ($manuname.PCSystemType -eq '5') {$PCSystemType = '&type='+'SOHO Server'}
 if ($manuname.PCSystemType -eq '0') {$PCSystemType = '&type='+'unspecified'}
 if ($manuname.PCSystemType -eq '3') {$PCSystemType = '&type='+'Workstation'}
 $memory=[math]::Round([long]$manuname.TotalPhysicalMemory/([math]::Pow(1024,3)),0)
-$memory
 $serial = Get-wmiobject win32_bios | ForEach-Object {$_.serialnumber}
-$serial
 #http-get to geoserver
 if ($manuname.Manufacturer -ne '') {$Manufacturer = '&Manufacturer='+$manuname.Manufacturer}
 if ($manuname.SystemFamily -ne '') {$SystemFamily = '&versionHw='+$manuname.SystemFamily}
