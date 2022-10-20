@@ -9,7 +9,7 @@ $ownips=@('109.196.132','178.57.71')
 #$ownips=@('109.196.132')
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.6a'
+$ver2='2.9.6b'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -279,7 +279,7 @@ $uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$resul
 $debug= QUERY SESSION
 #$uri = $uri  -replace "\s+", ""
 
-$debug=$duser+$duserstatus
+$debug=$user+$userstatus
 $qs=QUERY SESSION
 $debug=$debug+$qs
 
