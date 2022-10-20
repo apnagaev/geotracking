@@ -213,7 +213,7 @@ if (($user -eq $null) -and ($userstatus -eq $null)){
     
     if (($rdp[0].user -ne '') -and ($rdp[0].user -ne $null)){
         $user = $rdp[0].user
-        if ($user -eq 'rdp-tcp'){$user = $rdp[0].id}
+        if ($user -match 'rdp-tcp'){$user = $rdp[0].id}
         $userstatus = "logged rdp"
     }
 }
