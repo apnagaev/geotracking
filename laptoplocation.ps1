@@ -10,7 +10,7 @@ $ownips=@('109.196.132','178.57.71')
 $satVisible=''
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.6g'
+$ver2='2.9.6f'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -207,7 +207,7 @@ if (($user -eq $null) -and ($userstatus -eq $null)){
     $rdp = QUERY SESSION
     $rdp = $rdp  -replace "\s+", ";"
     $rdp = $rdp  -replace "Active", "Активно"
-    $rdp = $rdp -match 'rdp-tcp'
+    $rdp = $rdp -match 'rdp-tcp#'
     $rdp = $rdp -match 'Активно'
     $rdp = $rdp | ConvertFrom-Csv -Delimiter ';' -Header 'session','user','id','status'
     $user
@@ -220,6 +220,7 @@ if (($user -eq $null) -and ($userstatus -eq $null)){
 }
 if ($user -notmatch 'ATOL\\'){$user = 'ATOL\'+$user}
 
+if ($userstatus -eq $null){$userstatus='don't login'}
 
 $user=$user.ToLower()
 $winver='&winver=Windows '+[System.Environment]::OSVersion.Version.Major+' '+(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name DisplayVersion).DisplayVersion+' Build '+[System.Environment]::OSVersion.Version.Build
@@ -269,6 +270,7 @@ $Ignition = '&ignition=false'
 if ($userstatus -eq 'logged on') {$Ignition = '&ignition=true'}
 if ($userstatus -eq 'locked') {$Ignition = '&ignition=false'}
 if ($userstatus -eq 'logged rdp') {$Ignition = '&ignition=true'}
+if ($userstatus -eq 'don't login') {$Ignition = '&ignition=false'}
 
 $satVisible='&satVisible='+$warr.Count
 
