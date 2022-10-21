@@ -10,7 +10,7 @@ $ownips=@('109.196.132','178.57.71')
 $satVisible=''
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.6f'
+$ver2='2.9.6h'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
