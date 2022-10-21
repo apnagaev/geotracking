@@ -270,7 +270,7 @@ $Ignition = '&ignition=false'
 if ($userstatus -eq 'logged on') {$Ignition = '&ignition=true'}
 if ($userstatus -eq 'locked') {$Ignition = '&ignition=false'}
 if ($userstatus -eq 'logged rdp') {$Ignition = '&ignition=true'}
-if ($userstatus -eq 'don't login') {$Ignition = '&ignition=false'}
+if ($userstatus -eq 'dont login') {$Ignition = '&ignition=false'}
 
 $satVisible='&satVisible='+$warr.Count
 
