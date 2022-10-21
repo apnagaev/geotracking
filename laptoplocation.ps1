@@ -220,7 +220,7 @@ if (($user -eq $null) -and ($userstatus -eq $null)){
 }
 if ($user -notmatch 'ATOL\\'){$user = 'ATOL\'+$user}
 
-if ($userstatus -eq $null){$userstatus='don't login'}
+if ($userstatus -eq $null){$userstatus='dont login'}
 
 $user=$user.ToLower()
 $winver='&winver=Windows '+[System.Environment]::OSVersion.Version.Major+' '+(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name DisplayVersion).DisplayVersion+' Build '+[System.Environment]::OSVersion.Version.Build
