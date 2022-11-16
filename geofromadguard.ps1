@@ -1,4 +1,4 @@
-cls
+cls 
 Get-Command '*json'
 $yaapikey = 'yandex_locator_token'
 $server='geo.whereit.ru'
