@@ -10,7 +10,7 @@ $ownips=@('109.196.132','178.57.71')
 $satVisible=''
 #############ChangeMe##################
 $srvproto='http'
-$ver2='2.9.6h'
+$ver2='3.0.0'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
 if ($file -eq $null) {$file='C:\scripts\key.txt'}
 if ($file -eq '') {$file='C:\scripts\key.txt'}
@@ -153,9 +153,9 @@ $signal
 
 $manuname = Get-CimInstance -ClassName Win32_ComputerSystem
 $manuname | ConvertTo-Json
-$manuname.Manufacturer
+#$manuname.Manufacturer
 $manuname.SystemFamily
-$manuname.Model
+#$manuname.Model
 
 
 $network = Get-NetConnectionProfile
@@ -223,7 +223,7 @@ if ($user -notmatch 'ATOL\\'){$user = 'ATOL\'+$user}
 if ($userstatus -eq $null){$userstatus='dont login'}
 
 $user=$user.ToLower()
-$winver='&winver=Windows '+[System.Environment]::OSVersion.Version.Major+' '+(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name DisplayVersion).DisplayVersion+' Build '+[System.Environment]::OSVersion.Version.Build
+#$winver='&winver=Windows '+[System.Environment]::OSVersion.Version.Major+' '+(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name DisplayVersion).DisplayVersion+' Build '+[System.Environment]::OSVersion.Version.Build
 $manuname.PCSystemType
 if ($manuname.PCSystemType -eq '') {$PCSystemType = ''}
 if ($manuname.PCSystemType -eq '6') {$PCSystemType = '&type='+'Appliance PC'}
@@ -235,16 +235,14 @@ if ($manuname.PCSystemType -eq '7') {$PCSystemType = '&type='+'Performance serve
 if ($manuname.PCSystemType -eq '5') {$PCSystemType = '&type='+'SOHO Server'}
 if ($manuname.PCSystemType -eq '0') {$PCSystemType = '&type='+'unspecified'}
 if ($manuname.PCSystemType -eq '3') {$PCSystemType = '&type='+'Workstation'}
-$memory=[math]::Round([long]$manuname.TotalPhysicalMemory/([math]::Pow(1024,3)),0)
-$serial = Get-wmiobject win32_bios | ForEach-Object {$_.serialnumber}
+#$memory=[math]::Round([long]$manuname.TotalPhysicalMemory/([math]::Pow(1024,3)),0)
 #http-get to geoserver
-if ($manuname.Manufacturer -ne '') {$Manufacturer = '&Manufacturer='+$manuname.Manufacturer}
+#if ($manuname.Manufacturer -ne '') {$Manufacturer = '&Manufacturer='+$manuname.Manufacturer}
 if ($manuname.SystemFamily -ne '') {$SystemFamily = '&versionHw='+$manuname.SystemFamily}
-if ($manuname.Model -ne '') {$Model = '&Model='+$manuname.Model}
-if ($manuname.NumberOfLogicalProcessors -ne '') {$NumberOfLogicalProcessors = '&NumberOfLogicalProcessors='+$manuname.NumberOfLogicalProcessors}
+#if ($manuname.Model -ne '') {$Model = '&Model='+$manuname.Model}
+#if ($manuname.NumberOfLogicalProcessors -ne '') {$NumberOfLogicalProcessors = '&NumberOfLogicalProcessors='+$manuname.NumberOfLogicalProcessors}
 if ($manuname.NumberOfProcessors -ne '') {$NumberOfProcessors = '&NumberOfProcessors='+$NumberOfProcessors.Model}
-if ($serial -ne '') {$serial = '&serial='+$serial}
-if ($memory -ne '') {$memory = '&memory='+$memory}
+#if ($memory -ne '') {$memory = '&memory='+$memory}
 if ($eastruntime -ne '') {$eastruntime = '&eastruntime='+$eastruntime}
 if ($battstatus -ne '') {$battstatus = '&battstatus='+$battstatus}
 
@@ -284,9 +282,7 @@ $deviceid=$deviceid.ToLower()
 #networkinterfacealias
 #localip
 
-#$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$serial+$Manufacturer+$SystemFamily+$Model+$NumberOfLogicalProcessors+$serial+$memory+$eastruntime+$battstatus+$winver+$dtcs+$Ignition
-
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$serial+$Manufacturer+$SystemFamily+$Model+$NumberOfLogicalProcessors+$serial+$memory+$eastruntime+$battstatus+$winver+$dtcs+$Ignition+$satVisible
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$SystemFamily+$eastruntime+$battstatus+$dtcs+$Ignition+$satVisible
 $debug= QUERY SESSION
 #$uri = $uri  -replace "\s+", ""
 
