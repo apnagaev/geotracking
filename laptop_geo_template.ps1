@@ -33,9 +33,9 @@ $result = @{
       'altitude' = '0'
   }
 }
-$company = 'atol'
-$cdomain = 'atol'
-$mdomain = '@atol.ru'
+$company = '' #company name
+$cdomain = '' #company domain
+$mdomain = '' #user's upn suffix
 
 ##################
 Get-Command '*json'
