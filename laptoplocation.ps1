@@ -1,11 +1,5 @@
 cls
 
-
-#Invoke-Expression $($ScriptFromGitHub.Content)
-$server="geo.atol.su"
-$ver1="3.0"
-
-
 #####################nulled vars###################
 $i=0
 $wifiadd = ''
