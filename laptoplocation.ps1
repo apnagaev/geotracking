@@ -1,43 +1,36 @@
+cls
+
+
+#Invoke-Expression $($ScriptFromGitHub.Content)
+$server="geo.atol.su"
+$ver1="3.0"
+
+
 #####################nulled vars###################
 $i=0
 $wifiadd = ''
-$dtcs='&dtcs='
+$dtcs=''
 $user = $null
 $userstatus = $null
 $rdps = $null
-$ownips=@('109.196.132','178.57.71')
-#$ownips=@('109.196.132')
 $satVisible=''
+$networkInterfaceAlias=''
+$net_name=''
+$SystemFamily=''
 #############ChangeMe##################
-$srvproto='http'
-$ver2='3.0.0'
+$srvproto='https'
+$ver2='3.1.1'
 $ver='Loader:'+$ver1+' '+'Script:'+$ver2
-if ($file -eq $null) {$file='C:\scripts\key.txt'}
-if ($file -eq '') {$file='C:\scripts\key.txt'}
-$yaapikey = $key
-if ($yaapikey -eq '') {$yaapikey= Get-Content $file | Select-String -Pattern 'key='}
-if ($yaapikey -eq '') {$yaapikey= Get-Content $file}
-if ($yaapikey -eq $null) {$yaapikey= Get-Content $file}
-$yaapikey = $yaapikey -replace '$key=',''
-$yaapikey = $yaapikey -replace 'key=',''
-$yaapikey = $yaapikey -replace ' server=geo.nagaev.biz',''
-if ($server -eq '') {$server= Get-Content $file | Select-String -Pattern 'server='}
-if ($server -eq '') {$server='geo.whereit.ru'}
-if ($server -eq $null) {$server='geo.whereit.ru'}
-$server = $server -replace '$server=',''
-$server = $server -replace 'server=',''
 ##################
+Get-Command '*json'
 
-
-
-
-$deviceid=[System.Net.Dns]::GetHostByName($env:computerName).HostName
-
+$compsystem=Get-WmiObject Win32_ComputerSystem
+$deviceid=$compsystem.name+"."+$compsystem.domain
+$deviceid=$deviceid.ToLower()
+#$domain=$compsystem.domain
 
 #Console User Loggined
 $username = query user /server:localhost
-$domain = Get-WmiObject Win32_ComputerSystem
-#$username
 $username = $username -match 'console'
 if ($username -ne $null) {
     $username = $username -replace '\s+','!'
@@ -47,16 +40,15 @@ if ($username -ne $null) {
 else{$username='system'}
 
 
-Get-Command '*json'
-
 #Get white IP information
 $ipinf =  (Invoke-RestMethod http://ip-api.com/json/)
-#$ipinf
-$dtcs=$dtcs+' '+$ipinf.query
+if ($dtcs -ne '') {$dtcs='&dtcs='+$ipinf.query}
+
+$latitude =$ipinf.lat
+$longitude=$ipinf.lon
 
 #Get avialable WiFi networks
 $wlan = netsh wlan show network mode=bssid
-#$wlan
 
 #Clear BSSIDs
 $warr = $wlan -match 'BSSID'
@@ -76,7 +68,6 @@ if (($ip -eq '') -or($ip -eq $null)){
 
 
 #Make json for yandex-locator
-#$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ip+'"}}'
 if ($warr.Item(0) -ne $null){
     $wifiadd = ', "wifi_networks": [ '
     ForEach ($item in $warr){
@@ -87,25 +78,11 @@ if ($warr.Item(0) -ne $null){
     $wifiadd = $wifiadd -replace ".{1}$"
     $wifiadd = $wifiadd + ']'
     }
-$Body = 'json={"common": {"version": "1.0", "api_key": "'+$yaapikey+'"}, "ip": {"address_v4": "'+$ip+'"}'+$wifiadd+'}'
-write('yaapikey='+$yaapikey)
-write('server='+$server)
-$Body
-
-#Yandex-locator http-post
-$Uri = "https://api.lbs.yandex.net/geolocation/"
-#$Body
-$result = Invoke-RestMethod -Uri $Uri -Method Post -Body $Body
-$result | ConvertTo-Json
-$result.position.latitude = $result.position.latitude -replace ',','.'
-$result.position.longitude = $result.position.longitude -replace ',','.'
-
-#Disable accuraty if precision to hight
-if ($result.position.precision -gt 4000) {$result.position.precision=0}
+$Body = 'json={"common": {"version": "1.0", "api_key": "yaapikey"}, "ip": {"address_v4": "'+$ip+'"}'+$wifiadd+'}'
 
 #Calculate unix seconds timestamp
 $date1 = Get-Date -Date "01/01/1970"
-$date2 = [System.DateTime]::UtcNow
+$date2 = Get-Date
 $ts=[int](New-TimeSpan -Start $date1 -End $date2).TotalSeconds
 
 #Check charge and power, processing for pc
@@ -132,9 +109,7 @@ else{
 
 
 
-[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("cp866")
-$networkInterfaceAlias=''
-$net_name=''
+#[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("cp866")
 $netsh = netsh wlan sh int | Select-String signal,ssid,сигнал
 $netsh
 
@@ -183,23 +158,8 @@ if (Test-Connection $computer -Count 2 -Quiet) {
         } 
     catch { if ($user) { "$user logged on"; $userstatus='logged on' } } 
     } 
-#else { "$computer Offline" } 
-#}
 
 
-
-
-if (($null -ne ($ownips | ? { $ip -match $_ })) -and ($null -eq ($result.position.latitude | ? { '55.80' -match $_ })) -and ($null -eq ($result.position.longitude | ? { '37.62' -match $_ }))) {
-     write-host ('LocalPoint')
-#if ($null -ne ($ownips | ? { $ipinf.query -match $_ })) {
-    $result.position.latitude = '55.808443'
-    $result.position.longitude = '37.629943'
-    $result.position.precision = '50'
-    $result.position.altitude = '40'
-    $ip=$ip+' atol'
-    $satVisible='&satVisible=99'
-    $dtcs='wrong office location'
-}
 
 
 
@@ -218,11 +178,13 @@ if (($user -eq $null) -and ($userstatus -eq $null)){
         $userstatus = "logged rdp"
     }
 }
-if ($user -notmatch 'ATOL\\'){$user = 'ATOL\'+$user}
+$user=$user.ToLower()
+$domain=$compsystem.domain.Remove($compsystem.domain.IndexOf('.'))
+if ($user -notmatch $domain){$user = $domain+'\'+$user}
 
 if ($userstatus -eq $null){$userstatus='dont login'}
 
-$user=$user.ToLower()
+
 #$winver='&winver=Windows '+[System.Environment]::OSVersion.Version.Major+' '+(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name DisplayVersion).DisplayVersion+' Build '+[System.Environment]::OSVersion.Version.Build
 $manuname.PCSystemType
 if ($manuname.PCSystemType -eq '') {$PCSystemType = ''}
@@ -238,20 +200,19 @@ if ($manuname.PCSystemType -eq '3') {$PCSystemType = '&type='+'Workstation'}
 #$memory=[math]::Round([long]$manuname.TotalPhysicalMemory/([math]::Pow(1024,3)),0)
 #http-get to geoserver
 #if ($manuname.Manufacturer -ne '') {$Manufacturer = '&Manufacturer='+$manuname.Manufacturer}
-if ($manuname.SystemFamily -ne '') {$SystemFamily = '&versionHw='+$manuname.SystemFamily}
+if ($manuname.SystemFamily -ne $null) {$SystemFamily = '&versionHw='+$manuname.SystemFamily}
 #if ($manuname.Model -ne '') {$Model = '&Model='+$manuname.Model}
 #if ($manuname.NumberOfLogicalProcessors -ne '') {$NumberOfLogicalProcessors = '&NumberOfLogicalProcessors='+$manuname.NumberOfLogicalProcessors}
-if ($manuname.NumberOfProcessors -ne '') {$NumberOfProcessors = '&NumberOfProcessors='+$NumberOfProcessors.Model}
+#if ($manuname.NumberOfProcessors -ne '') {$NumberOfProcessors = '&NumberOfProcessors='+$NumberOfProcessors.Model}
 #if ($memory -ne '') {$memory = '&memory='+$memory}
 if ($eastruntime -ne '') {$eastruntime = '&eastruntime='+$eastruntime}
-if ($battstatus -ne '') {$battstatus = '&battstatus='+$battstatus}
+if ($battstatus -ne $null) {$battstatus = '&battstatus='+$battstatus}
 
-$result.position.altitude = '&altitude='+$result.position.altitude
 if ($ipinf.zip -ne '') {$ipinf.zip = '&zip='+$ipinf.zip}
 if ($ipinf.isp -ne '') {$ipinf.isp = '&operator='+$ipinf.isp}
-if ($user -ne '') {$login = '&driverUniqueId='+$user}
+if ($user -ne '') {$login = '&userId='+$user}
 if ($username.Item(7) -ne '') {$logt = '&logintime='+$username.Item(6)+' '+$username.Item(7)}
-if ($domain.domain -ne '') {$domain = '&domain='+$domain.domain}
+if ($compsystem.domain -ne '') {$domain = '&domain='+$compsystem.domain}
 if ($ssid -ne '') {$ssid = '&ssid='+$ssid}
 if ($signal -ne '') {$signal = '&rssi='+$signal}
 if ($network.InterfaceAlias -ne $null) {$networkInterfaceAlias = '&InterfaceAlias='+$network.InterfaceAlias}
@@ -278,65 +239,11 @@ $localip = Get-NetIPAddress -InterfaceAlias $network.InterfaceAlias
 $localip | ConvertTo-Json
 if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
-$deviceid=$deviceid.ToLower()
-#networkinterfacealias
-#localip
 
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$result.position.latitude+'&lon='+$result.position.longitude+$result.position.altitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&accuracy='+$result.position.precision+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$SystemFamily+$eastruntime+$battstatus+$dtcs+$Ignition+$satVisible
-$debug= QUERY SESSION
-#$uri = $uri  -replace "\s+", ""
-
-$debug=$user+$userstatus
-$qs=QUERY SESSION
-$debug=$debug+$qs
-
-        
-try{
-Invoke-RestMethod -Uri $uri -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
-}
-
-                    catch  {
-                    Write('HTTP Error')
-                    $tlogin=$user
-                    $user
-                    $tlogin = $tlogin -replace 'ATOL\\',''
-                    $tlogin = $tlogin -replace 'NAGAEV\\',''
-                    $tlogin
-
-                    $body = '{"name": "'+$tlogin+'@atol.ru","uniqueId": "'+$deviceid+'","disabled": false,"positionId": 0,"groupId": 2,"attributes": {}}'
-                    Invoke-RestMethod  -Headers @{Authorization=("Basic {0}" -f $base64)} -Uri $apiUri  -Method 'Post' -Body $body -ContentType 'application/json' -Verbose
-                       #Start-Sleep 30
-                       #Invoke-RestMethod -Uri $uri  -Method 'Post' -Body $debug -ContentType 'application/x-www-form-urlencoded' -Verbose
-              
-                    }
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$latitude+'&lon='+$longitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$SystemFamily+$eastruntime+$battstatus+$dtcs+$Ignition+$satVisible
 
 
-
-
-
-#Write vars
-write('localIP='+$localip.IPAddress)
-write('DeviceID='+$deviceid)
-write('Username='+$username)
-write('timestamp='+$ts)
-write('latitude='+$result.position.latitude)
-write('longitude='+$result.position.longitude)
-write('Charge='+$charge)
-write('Power='+$ac)
-write('URL='+$uri)
-write('ZIP='+$ipinf.zip)
-$yaapikey
-$server
-Write-Host('-----------------DEBUG----------------')
-$ver
-$userstatus
-$user
-$rdp[0].user
-$uri
-$userstat
-$login
-$Ignition
-
+Invoke-RestMethod -Uri $uri -Method 'Post' -Body $body -ContentType 'application/x-www-form-urlencoded' -Verbose
 
 # SIG # Begin signature block
 # MIIIDgYJKoZIhvcNAQcCoIIH/zCCB/sCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
