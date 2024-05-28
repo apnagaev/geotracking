@@ -1,5 +1,7 @@
 cls
-
+$rtime= Get-Random -Maximum 300
+$rtime
+Start-Sleep -Seconds $rtime
 #####################nulled vars###################
 $i=0
 $wifiadd = ''
