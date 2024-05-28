@@ -15,8 +15,8 @@ $net_name=''
 $SystemFamily=''
 #############ChangeMe##################
 $srvproto='https'
-$ver2='3.1.1'
-$ver='Loader:'+$ver1+' '+'Script:'+$ver2
+$ver2='3.2.0'
+$ver='Script:'+$ver2
 ##################
 Get-Command '*json'
 
