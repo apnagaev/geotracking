@@ -77,9 +77,7 @@ if ($warr.Item(0) -ne $null){
 $Body = 'json={"common": {"version": "1.0", "api_key": "yaapikey"}, "ip": {"address_v4": "'+$ip+'"}'+$wifiadd+'}'
 
 #Calculate unix seconds timestamp
-$date1 = Get-Date -Date "01/01/1970"
-$date2 = Get-Date
-$ts=[int](New-TimeSpan -Start $date1 -End $date2).TotalSeconds
+$ts=[int][double]::Parse((Get-Date (get-date).touniversaltime() -UFormat %s))
 
 #Check charge and power, processing for pc
 $charge = Get-CimInstance -ClassName Win32_Battery | Select-Object -ExpandProperty EstimatedChargeRemaining
