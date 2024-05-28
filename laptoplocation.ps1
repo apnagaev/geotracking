@@ -1,5 +1,5 @@
 cls
-$rtime= Get-Random -Maximum 300
+$rtime= Get-Random -Maximum 600
 $rtime
 Start-Sleep -Seconds $rtime
 #####################nulled vars###################
@@ -15,7 +15,7 @@ $net_name=''
 $SystemFamily=''
 #############ChangeMe##################
 $srvproto='https'
-$ver2='3.2.0'
+$ver2='3.2.1 via git'
 $ver='Script:'+$ver2
 ##################
 Get-Command '*json'
