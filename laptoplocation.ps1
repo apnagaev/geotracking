@@ -2,6 +2,8 @@ cls
 $rtime= Get-Random -Maximum 600
 $rtime
 Start-Sleep -Seconds $rtime
+#######change for your trackmiddle server
+$server=$server
 #####################nulled vars###################
 $i=0
 $wifiadd = ''
