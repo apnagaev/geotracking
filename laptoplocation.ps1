@@ -235,8 +235,8 @@ $localip = Get-NetIPAddress -InterfaceAlias $network.InterfaceAlias
 $localip | ConvertTo-Json
 if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
-
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$latitude+'&lon='+$longitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&vin='+$deviceid+$ipinf.zip+$login+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$SystemFamily+$eastruntime+$battstatus+$dtcs+$Ignition+$satVisible
+#$login empty in uri
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$latitude+'&lon='+$longitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&vin='+$deviceid+$ipinf.zip+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$SystemFamily+$eastruntime+$battstatus+$dtcs+$Ignition+$satVisible
 
 
 Invoke-RestMethod -Uri $uri -Method 'Post' -Body $body -ContentType 'application/x-www-form-urlencoded' -Verbose
