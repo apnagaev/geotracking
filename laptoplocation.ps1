@@ -85,7 +85,8 @@ $ts=[int][double]::Parse((Get-Date (get-date).touniversaltime() -UFormat %s))
 $charge = Get-CimInstance -ClassName Win32_Battery | Select-Object -ExpandProperty EstimatedChargeRemaining
 $ac = (Get-WmiObject -Class BatteryStatus -Namespace root\wmi -ComputerName "localhost").PowerOnLine
 if ($charge -eq $null) {$charge = 100} 
-if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'AC'} else {$ac = 'Battery'}
+#if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'AC'} else {$ac = 'Battery'}
+if (($ac -eq $null) -or ($ac -eq 'True')) {$ac = 'true'} else {$ac = 'false'}
 $charge = [int]$charge
 if ($charge -is [int]) {
 $charge
@@ -235,8 +236,8 @@ $localip = Get-NetIPAddress -InterfaceAlias $network.InterfaceAlias
 $localip | ConvertTo-Json
 if ($localip.IPAddress -ne '') {$localip = '&localIP='+$localip.IPAddress}
 
-#$login empty in uri
-$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$latitude+'&lon='+$longitude+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&vin='+$deviceid+$ipinf.zip+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$SystemFamily+$eastruntime+$battstatus+$dtcs+$Ignition+$satVisible
+
+$uri= $srvproto+'://'+$server+'/?id='+$deviceid+'&timestamp='+$ts+'&lat='+$latitude+'&lon='+$longitude+$login+'&realip='+$ip+$charge+$ipinf.isp+'&power='+$ac+'&vin='+$deviceid+$ipinf.zip+$domain+$logt+$ssid+$signal+$networkName+$userstat+$lckuser+$networkInterfaceAlias+'&versionFw='+$ver+$localip+'&channel=local_script'+$PCSystemType+$SystemFamily+$eastruntime+$battstatus+$dtcs+$Ignition+$satVisible
 
 
 Invoke-RestMethod -Uri $uri -Method 'Post' -Body $body -ContentType 'application/x-www-form-urlencoded' -Verbose
